@@ -1,0 +1,18 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Temporary or Unused Files in Root
+WhatsApp*.jpeg
+WhatsApp*.jpg
+logo*.jpeg
+logo*.jpg
+*.docx
+*.py
+
+# IDE & System Caches
+.vscode/
+.idea/
+.system_generated/

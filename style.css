@@ -1,0 +1,388 @@
+:root {
+    /* Multi-Hue Green Palette Tokens */
+    --green-forest: #062414;
+    --green-pine: #0b3d22;
+    --green-emerald: #10b981;
+    --green-jade: #059669;
+    --green-mint: #34d399;
+    --green-lime: #84cc16;
+    --green-neon: #22c55e;
+    --green-sage: #dcfce7;
+    --green-light-mint: #ecfdf5;
+
+    /* Primary Accent Variables */
+    --primary: #16a34a;
+    --primary-glow: rgba(34, 197, 94, 0.4);
+    --dark-forest: #061a0e;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #f7faf8;
+    color: #0c1a12;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: 'Outfit', sans-serif;
+}
+
+/* ==========================================================
+   ULTRA-LUXURY 3D GLASSMORPHISM SYSTEM
+   ========================================================== */
+
+/* 1. Light 3D Glass Card (Frosted with glossy top bevel highlight) */
+.glass-3d-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(240, 253, 244, 0.75) 100%);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 
+        0 10px 30px -5px rgba(6, 78, 59, 0.07),
+        0 2px 6px 0 rgba(0, 0, 0, 0.03),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.95),
+        inset 0 -1px 2px 0 rgba(16, 185, 129, 0.08);
+    border-radius: 1.5rem;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-3d-card:hover {
+    transform: translateY(-8px) scale(1.012);
+    border-color: rgba(52, 211, 153, 0.65);
+    box-shadow: 
+        0 24px 45px -10px rgba(16, 185, 129, 0.22),
+        0 10px 20px -5px rgba(5, 150, 105, 0.12),
+        0 0 25px rgba(52, 211, 153, 0.15),
+        inset 0 1px 2px 0 rgba(255, 255, 255, 1);
+}
+
+/* 2. Glass Card Diagonal Sheen / Light Streak on Hover */
+.glass-3d-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+    transform: skewX(-25deg);
+    transition: 0.8s ease-in-out;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.glass-3d-card:hover::before {
+    left: 200%;
+}
+
+/* 3. Dark 3D Glass Card (For Calculator, Badges, Footer) */
+.glass-3d-dark {
+    background: linear-gradient(145deg, rgba(6, 36, 20, 0.94) 0%, rgba(10, 58, 32, 0.88) 50%, rgba(3, 20, 11, 0.98) 100%);
+    backdrop-filter: blur(20px) saturate(200%);
+    -webkit-backdrop-filter: blur(20px) saturate(200%);
+    border: 1px solid rgba(74, 222, 128, 0.28);
+    box-shadow: 
+        0 20px 45px -10px rgba(0, 0, 0, 0.5),
+        0 0 30px -5px rgba(34, 197, 94, 0.2),
+        inset 0 1px 1.5px 0 rgba(110, 231, 183, 0.4);
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-3d-dark:hover {
+    transform: translateY(-4px);
+    border-color: rgba(74, 222, 128, 0.55);
+    box-shadow: 
+        0 28px 55px -10px rgba(0, 0, 0, 0.6),
+        0 0 40px -5px rgba(34, 197, 94, 0.35),
+        inset 0 1px 2px 0 rgba(110, 231, 183, 0.6);
+}
+
+/* 4. Translucent Glass Pill & Badges */
+.glass-pill {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 15px -2px rgba(16, 185, 129, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.glass-pill-dark {
+    background: rgba(6, 36, 20, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(74, 222, 128, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(110, 231, 183, 0.3);
+}
+
+/* ==========================================================
+   MULTI-HUE GREEN GRADIENTS (Emerald, Mint, Lime, Forest)
+   ========================================================== */
+
+/* Multi-green gradient text */
+.gradient-text-multi {
+    background: linear-gradient(135deg, #059669 0%, #10b981 35%, #22c55e 70%, #84cc16 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-emerald {
+    background: linear-gradient(135deg, #059669 0%, #10b981 50%, #064e3b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-mint {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-lime {
+    background: linear-gradient(135deg, #84cc16 0%, #22c55e 50%, #15803d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-light {
+    background: linear-gradient(135deg, #a7f3d0 0%, #6ee7b7 40%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #10b981 0%, #059669 45%, #064e3b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Multi-Green Badge Variations */
+.badge-emerald {
+    background: linear-gradient(135deg, rgba(209, 250, 229, 0.9) 0%, rgba(167, 243, 208, 0.7) 100%);
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    color: #065f46;
+}
+
+.badge-mint {
+    background: linear-gradient(135deg, rgba(236, 253, 245, 0.95) 0%, rgba(209, 250, 229, 0.8) 100%);
+    border: 1px solid rgba(110, 231, 183, 0.5);
+    color: #047857;
+}
+
+.badge-forest {
+    background: linear-gradient(135deg, rgba(6, 36, 20, 0.9) 0%, rgba(10, 58, 32, 0.8) 100%);
+    border: 1px solid rgba(74, 222, 128, 0.35);
+    color: #a7f3d0;
+}
+
+.badge-lime {
+    background: linear-gradient(135deg, rgba(247, 254, 231, 0.95) 0%, rgba(236, 252, 203, 0.8) 100%);
+    border: 1px solid rgba(163, 230, 53, 0.5);
+    color: #3f6212;
+}
+
+/* ==========================================================
+   3D BUTTONS & INTERACTIVE ELEMENTS
+   ========================================================== */
+
+/* 3D Primary Button with Emerald-Forest Gradient */
+.btn-3d-emerald {
+    background: linear-gradient(135deg, #10b981 0%, #059669 40%, #064e3b 100%);
+    color: #ffffff;
+    box-shadow: 
+        0 8px 20px -3px rgba(16, 185, 129, 0.45),
+        0 2px 4px rgba(0, 0, 0, 0.08),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-3d-emerald:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 
+        0 14px 28px -4px rgba(16, 185, 129, 0.55),
+        0 0 20px rgba(52, 211, 153, 0.3),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6);
+}
+
+.btn-3d-emerald:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+/* 3D Glass Secondary Button */
+.btn-3d-glass {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 253, 244, 0.8) 100%);
+    border: 1.5px solid rgba(52, 211, 153, 0.45);
+    box-shadow: 
+        0 6px 16px -2px rgba(6, 78, 59, 0.08),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-3d-glass:hover {
+    transform: translateY(-2px) scale(1.02);
+    border-color: rgba(16, 185, 129, 0.8);
+    background: linear-gradient(135deg, #ffffff 0%, rgba(220, 252, 231, 0.9) 100%);
+    box-shadow: 
+        0 12px 24px -4px rgba(16, 185, 129, 0.2),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 1);
+}
+
+.btn-3d-glass:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+/* ==========================================================
+   AMBIENT GLOW SPHERES (Multi-Green Aurora Mesh)
+   ========================================================== */
+.glow-sphere {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(85px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+}
+
+.glow-emerald {
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.38) 0%, rgba(5, 150, 105, 0.15) 50%, transparent 75%);
+}
+
+.glow-mint {
+    background: radial-gradient(circle, rgba(52, 211, 153, 0.35) 0%, rgba(110, 231, 183, 0.12) 50%, transparent 75%);
+}
+
+.glow-lime {
+    background: radial-gradient(circle, rgba(132, 204, 22, 0.25) 0%, rgba(163, 230, 53, 0.1) 50%, transparent 75%);
+}
+
+.glow-forest {
+    background: radial-gradient(circle, rgba(6, 78, 59, 0.3) 0%, rgba(2, 44, 34, 0.1) 50%, transparent 75%);
+}
+
+/* ==========================================================
+   3D TILT EFFECT & MICRO-INTERACTIONS
+   ========================================================== */
+.tilt-card-container {
+    perspective: 1000px;
+}
+
+.tilt-card {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+}
+
+/* Shimmer Light Sweeping Animation */
+.btn-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-shimmer::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: rotate(30deg);
+    animation: btnShimmer 3.5s infinite;
+}
+
+@keyframes btnShimmer {
+    0% {
+        transform: translateX(-100%) rotate(30deg);
+    }
+    100% {
+        transform: translateX(100%) rotate(30deg);
+    }
+}
+
+/* Custom Styled Scrollbar */
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0fdf4;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+    border-radius: 10px;
+    border: 2px solid #f0fdf4;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #047857;
+}
+
+/* Reveal on Scroll Transitions */
+.reveal-item {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-item.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Luxury Nav Links */
+.nav-item-link {
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-item-link::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    width: 0;
+    height: 2.5px;
+    background: linear-gradient(90deg, #10b981, #22c55e);
+    border-radius: 9999px;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateX(-50%);
+}
+
+.nav-item-link:hover::after {
+    width: calc(100% - 1.25rem);
+}
+
+/* SCNEXTGEN Signature Badge */
+.scnextgen-badge {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(16, 185, 129, 0.12) 100%);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.scnextgen-badge:hover {
+    border-color: rgba(52, 211, 153, 0.6);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(16, 185, 129, 0.22) 100%);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Luxury Welcome Intro Splash Screen */
+#welcomeSplash {
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#welcomeSplash.dismissed {
+    opacity: 0 !important;
+    transform: scale(1.05) !important;
+    pointer-events: none !important;
+}
+
