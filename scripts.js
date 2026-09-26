@@ -89,13 +89,21 @@
 
         // 4. Interactive Film Calculator Logic
         function updateWeightLabel(val) {
-            document.getElementById('calcWeightLabel').innerText = val + ' kg';
+            const el = document.getElementById('calcWeightLabel');
+            if (el) el.innerText = val + ' kg';
         }
 
         function calculateRecommendation() {
-            const app = document.getElementById('calcApp').value;
-            const method = document.querySelector('input[name="calcMethod"]:checked').value;
-            const weight = parseInt(document.getElementById('calcWeight').value);
+            const calcApp = document.getElementById('calcApp');
+            if (!calcApp) return;
+            const methodEl = document.querySelector('input[name="calcMethod"]:checked');
+            if (!methodEl) return;
+            const weightEl = document.getElementById('calcWeight');
+            if (!weightEl) return;
+
+            const app = calcApp.value;
+            const method = methodEl.value;
+            const weight = parseInt(weightEl.value) || 500;
 
             let gauge = '20 Micron';
             let filmType = 'High-Grade Manual Stretch Film';
@@ -374,6 +382,7 @@
                 ]
             }
         };
+        productSpecs['strapping-accessories'] = productSpecs['strapping-clips'];
 
         function openProductModal(key) {
             const data = productSpecs[key];
@@ -480,6 +489,9 @@
             const emailInput = document.getElementById('quoteEmail');
             const productSelect = document.getElementById('quoteProduct');
             const volumeSelect = document.getElementById('quoteVolume');
+            const sizeInput = document.getElementById('quoteSize');
+            const micronInput = document.getElementById('quoteMicron');
+            const locationInput = document.getElementById('quoteLocation');
             const messageInput = document.getElementById('quoteMessage');
 
             const name = (nameInput ? nameInput.value : '').trim();
@@ -487,7 +499,10 @@
             const phone = (phoneInput ? phoneInput.value : '').trim();
             const email = (emailInput && emailInput.value.trim()) ? emailInput.value.trim() : 'Not Provided';
             const product = productSelect ? productSelect.options[productSelect.selectedIndex].text : 'Stretch Film & Packaging';
-            const volume = volumeSelect ? volumeSelect.options[volumeSelect.selectedIndex].text : 'Initial Commercial Batch';
+            const volume = volumeSelect ? volumeSelect.options[volumeSelect.selectedIndex].text : 'Regular Monthly Supply';
+            const size = sizeInput ? sizeInput.value.trim() : '';
+            const micron = micronInput ? micronInput.value.trim() : '';
+            const location = locationInput ? locationInput.value.trim() : '';
             const notes = (messageInput && messageInput.value.trim()) ? messageInput.value.trim() : 'Please provide wholesale quotation, minimum order quantities (MOQ), and delivery schedule.';
 
             // Validation with smooth focus
@@ -514,6 +529,12 @@
 
             const inquiryType = isDirect ? 'DIRECT WHATSAPP INQUIRY' : 'OFFICIAL QUOTATION REQUEST (RFQ)';
 
+            let reqDetails = `• *Product:* ${product}\n`;
+            if (size) reqDetails += `• *Size / Width:* ${size}\n`;
+            if (micron) reqDetails += `• *Micron / Gauge:* ${micron}\n`;
+            reqDetails += `• *Monthly Quantity:* ${volume}\n`;
+            if (location) reqDetails += `• *Delivery Location:* ${location}\n`;
+
             // Cleanly formatted WhatsApp Message with bolding, sections, and emojis
             const formattedMessage = 
 `━━━━━━━━━━━━━━━━━━━━━
@@ -527,18 +548,15 @@
 • *Phone / WhatsApp:* ${phone}
 • *Email:* ${email}
 
-📦 *PRODUCT REQUIREMENTS*
-• *Selected Product:* ${product}
-• *Estimated Monthly Volume:* ${volume}
-
-📍 *DELIVERY & SPECIAL INSTRUCTIONS*
+📦 *PACKAGING REQUIREMENTS*
+${reqDetails}
+📍 *NOTES & SPECIAL INSTRUCTIONS*
 ${notes}
 
 ━━━━━━━━━━━━━━━━━━━━━
-🏭 *Manufacturer:* Green Light Enterprises
-📍 *Factory:* 3/9A, Rita Lane, Wewala, Ja-Ela, Sri Lanka
+🏭 *Supplier:* Green Light Enterprises
+📍 *Location:* Ja-Ela, Sri Lanka
 📞 *Hotline:* +94 77 324 8520 / 011 224 4746
-🌐 *Sent via:* Official Web Portal
 ⏰ *Timestamp:* ${dateStr} at ${timeStr}
 ━━━━━━━━━━━━━━━━━━━━━`;
 
