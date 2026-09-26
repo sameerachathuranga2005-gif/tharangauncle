@@ -19,13 +19,31 @@
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
     background-color: #f7faf8;
-    color: #0c1a12;
+    color: #052e16;
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
     font-family: 'Outfit', sans-serif;
+    color: #052e16;
+}
+
+/* Force dark green on any text that was previously black or dark neutral */
+.text-gray-900,
+.text-gray-800,
+.text-gray-700,
+.text-slate-900,
+.text-slate-800,
+.text-slate-700,
+.text-black,
+.text-zinc-900,
+.text-neutral-900 {
+    color: #052e16 !important;
+}
+
+.text-white {
+    color: #ffffff !important;
 }
 
 /* ==========================================================
