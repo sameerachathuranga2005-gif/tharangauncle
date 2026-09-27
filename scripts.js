@@ -588,40 +588,141 @@ ${notes}
             sendQuoteToWhatsApp(true);
         }
 
-        // 9. 3D Tilt Card Vanilla Effect
-        const tiltCards = document.querySelectorAll('.tilt-card-container');
-        tiltCards.forEach(container => {
-            const card = container.querySelector('.tilt-card');
-            if (!card) return;
+        // 9. Ultra-Smooth 60/120FPS 3D Gyroscopic Tilt & Glare Parallax Engine (Push-in 3D Effect)
+        function init3DTilt() {
+            const tiltCards = document.querySelectorAll('[data-tilt-card]');
+            tiltCards.forEach(card => {
+                let rafId = null;
+                const maxTilt = parseFloat(card.getAttribute('data-tilt-max')) || 14;
+                const innerImg = card.querySelector('[data-tilt-inner-img]');
+                const depthLayers = card.querySelectorAll('[data-depth]');
 
-            container.addEventListener('mousemove', (e) => {
-                const rect = container.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -12;
-                const rotateY = ((x - centerX) / centerX) * 12;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
+                card.addEventListener('mousemove', (e) => {
+                    // Prevent child tilt card from triggering parent card movement
+                    e.stopPropagation();
 
-            container.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
-                card.style.transition = `transform 0.5s ease`;
-                setTimeout(() => {
-                    card.style.transition = `transform 0.1s ease-out`;
-                }, 500);
-            });
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
 
-            container.addEventListener('mouseenter', () => {
-                card.style.transition = `transform 0.1s ease-out`;
+                    // Clamped normalized coordinates (-1 to +1)
+                    const xNorm = Math.max(-1, Math.min(1, (x / rect.width - 0.5) * 2));
+                    const yNorm = Math.max(-1, Math.min(1, (y / rect.height - 0.5) * 2));
+
+                    const pctX = ((x / rect.width) * 100).toFixed(1);
+                    const pctY = ((y / rect.height) * 100).toFixed(1);
+
+                    if (rafId) cancelAnimationFrame(rafId);
+                    rafId = requestAnimationFrame(() => {
+                        card.style.setProperty('--mouse-x', `${pctX}%`);
+                        card.style.setProperty('--mouse-y', `${pctY}%`);
+
+                        // 3D Tilt & Push-in Physics:
+                        // Side under cursor pushes into screen (away from user into 3D depth)
+                        const rotX = -yNorm * maxTilt;
+                        const rotY = xNorm * maxTilt;
+
+                        // Dynamic 3D perspective with push-in depth sinking
+                        card.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translate3d(0px, 0px, -8px) scale3d(0.99, 0.99, 0.99)`;
+
+                        // Dynamic realistic shadow opposite to pushed edge
+                        const shadowX = (-xNorm * 18).toFixed(1);
+                        const shadowY = (-yNorm * 18 + 12).toFixed(1);
+                        card.style.boxShadow = `${shadowX}px ${shadowY}px 45px -10px rgba(0, 0, 0, 0.85), 0 0 35px rgba(34, 197, 94, 0.35)`;
+
+                        // Optical Parallax Shift for Inner Image (Window depth illusion)
+                        if (innerImg) {
+                            const imgShiftX = (-xNorm * 12).toFixed(1);
+                            const imgShiftY = (-yNorm * 12).toFixed(1);
+                            innerImg.style.transform = `scale(1.08) translate3d(${imgShiftX}px, ${imgShiftY}px, 0)`;
+                        }
+
+                        // Parallax 3D child badges / labels
+                        depthLayers.forEach(layer => {
+                            if (layer === card) return;
+                            const depth = parseFloat(layer.getAttribute('data-depth')) || 20;
+                            const shiftX = (-xNorm * depth * 0.35).toFixed(1);
+                            const shiftY = (-yNorm * depth * 0.35).toFixed(1);
+                            layer.style.transform = `translate3d(${shiftX}px, ${shiftY}px, 0)`;
+                        });
+                    });
+                });
+
+                let isEntering = false;
+
+                card.addEventListener('mouseenter', () => {
+                    isEntering = true;
+                    // Smooth 150ms initial blend to prevent sudden jump on entry
+                    card.style.transition = 'transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s ease';
+                    if (innerImg) innerImg.style.transition = 'transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)';
+                    depthLayers.forEach(layer => {
+                        layer.style.transition = 'transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)';
+                    });
+
+                    // Remove transition after entry so continuous mousemove is 100% lag-free at 60/120fps
+                    setTimeout(() => {
+                        if (isEntering) {
+                            card.style.transition = 'none';
+                            if (innerImg) innerImg.style.transition = 'none';
+                            depthLayers.forEach(layer => { layer.style.transition = 'none'; });
+                        }
+                    }, 150);
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    isEntering = false;
+                    if (rafId) cancelAnimationFrame(rafId);
+
+                    const springEase = 'transform 0.75s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.75s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.35s ease';
+                    card.style.transition = springEase;
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translate3d(0px, 0px, 0px) scale3d(1, 1, 1)';
+                    card.style.boxShadow = '';
+
+                    if (innerImg) {
+                        innerImg.style.transition = 'transform 0.75s cubic-bezier(0.23, 1, 0.32, 1)';
+                        innerImg.style.transform = 'scale(1) translate3d(0px, 0px, 0px)';
+                    }
+
+                    depthLayers.forEach(layer => {
+                        layer.style.transition = 'transform 0.75s cubic-bezier(0.23, 1, 0.32, 1)';
+                        layer.style.transform = 'translate3d(0px, 0px, 0px)';
+                    });
+                });
             });
-        });
+        }
+
+        // 10. Scroll-Triggered Reveal Animation (Intersection Observer)
+        function initScrollReveal() {
+            const revealElements = document.querySelectorAll('.reveal-on-scroll');
+            if (!revealElements.length) return;
+
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach((entry, idx) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-revealed');
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    root: null,
+                    threshold: 0.12,
+                    rootMargin: '0px 0px -40px 0px'
+                });
+
+                revealElements.forEach(el => observer.observe(el));
+            } else {
+                // Fallback for older browsers
+                revealElements.forEach(el => el.classList.add('is-revealed'));
+            }
+        }
 
         // Initialize calculator on page load
         calculateRecommendation();
 
-        // 10. Luxury Welcome Splash Screen / Intro Handler
+        // 11. Luxury Welcome Splash Screen / Intro Handler
+        let splashTimer = null;
+
         function initWelcomeSplash() {
             const splash = document.getElementById('welcomeSplash');
             if (!splash) return;
@@ -629,64 +730,95 @@ ${notes}
             const progressBar = document.getElementById('splashProgressBar');
             const statusText = document.getElementById('splashStatusText');
 
+            if (splashTimer) clearInterval(splashTimer);
+
             let progress = 0;
-            const duration = 2100; // 2.1 seconds total intro
-            const intervalTime = 25;
+            const duration = 2800; // 2.8 seconds cinematic duration
+            const intervalTime = 30;
             const step = 100 / (duration / intervalTime);
 
-            const timer = setInterval(() => {
+            if (progressBar) progressBar.style.width = '0%';
+            if (statusText) statusText.innerText = 'INITIALIZING PACKAGING EXPERIENCE...';
+
+            splashTimer = setInterval(() => {
                 progress += step;
                 if (progress >= 100) {
                     progress = 100;
-                    clearInterval(timer);
+                    clearInterval(splashTimer);
+                    splashTimer = null;
                     if (progressBar) progressBar.style.width = '100%';
                     if (statusText) statusText.innerText = 'WELCOME TO GREEN LIGHT ENTERPRISES';
 
                     setTimeout(() => {
                         dismissWelcomeSplash();
-                    }, 300);
+                    }, 450);
                 } else {
                     if (progressBar) progressBar.style.width = `${progress}%`;
                     if (statusText) {
-                        if (progress < 30) {
-                            statusText.innerText = 'CONNECTING TO FACTORY NETWORK...';
-                        } else if (progress < 65) {
-                            statusText.innerText = 'LOADING PACKAGING CATALOG...';
-                        } else if (progress < 90) {
-                            statusText.innerText = 'OPTIMIZING LOAD SECURITY DATA...';
+                        if (progress < 25) {
+                            statusText.innerText = 'INITIALIZING PACKAGING EXPERIENCE...';
+                        } else if (progress < 55) {
+                            statusText.innerText = 'LOADING INDUSTRIAL SPECIFICATIONS...';
+                        } else if (progress < 85) {
+                            statusText.innerText = 'PREPARING QUOTATION ENGINE...';
                         } else {
-                            statusText.innerText = 'EXPERIENCE READY';
+                            statusText.innerText = 'READY — ENTERING WEBSITE';
                         }
                     }
                 }
             }, intervalTime);
 
             // Clicking outside dismisses early
-            splash.addEventListener('click', (e) => {
+            splash.onclick = (e) => {
                 if (e.target.closest('button')) return;
-                clearInterval(timer);
+                if (splashTimer) clearInterval(splashTimer);
+                splashTimer = null;
                 dismissWelcomeSplash();
-            });
+            };
         }
 
         function dismissWelcomeSplash() {
             const splash = document.getElementById('welcomeSplash');
             if (!splash || splash.classList.contains('dismissed')) return;
+            if (splashTimer) {
+                clearInterval(splashTimer);
+                splashTimer = null;
+            }
             splash.classList.add('dismissed');
 
             splash.style.opacity = '0';
-            splash.style.transform = 'scale(1.05)';
+            splash.style.transform = 'scale(1.06)';
             splash.style.pointerEvents = 'none';
 
             setTimeout(() => {
-                splash.remove();
-            }, 800);
+                splash.style.display = 'none';
+            }, 750);
         }
 
-        // Initialize welcome splash on page load
+        function replayWelcomeSplash() {
+            const splash = document.getElementById('welcomeSplash');
+            if (!splash) return;
+            splash.classList.remove('dismissed');
+            splash.style.display = 'flex';
+            splash.style.opacity = '1';
+            splash.style.transform = 'scale(1)';
+            splash.style.pointerEvents = 'auto';
+            initWelcomeSplash();
+        }
+
+        window.replayWelcomeSplash = replayWelcomeSplash;
+        window.dismissWelcomeSplash = dismissWelcomeSplash;
+
+        // Initialize on DOM ready
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initWelcomeSplash);
+            document.addEventListener('DOMContentLoaded', () => {
+                initWelcomeSplash();
+                init3DTilt();
+                initScrollReveal();
+            });
         } else {
             initWelcomeSplash();
+            init3DTilt();
+            initScrollReveal();
         }
 
