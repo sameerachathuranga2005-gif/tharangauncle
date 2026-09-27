@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap');
+
 :root {
     /* Multi-Hue Green Palette Tokens */
     --green-forest: #062414;
@@ -14,6 +16,10 @@
     --primary: #16a34a;
     --primary-glow: rgba(34, 197, 94, 0.4);
     --dark-forest: #061a0e;
+}
+
+.font-cursive {
+    font-family: 'Caveat', cursive, sans-serif;
 }
 
 body {
@@ -293,7 +299,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 .tilt-card {
     transform-style: preserve-3d;
-    transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+    will-change: transform, box-shadow;
 }
 
 /* Shimmer Light Sweeping Animation */
@@ -354,27 +360,54 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     transform: translateY(0);
 }
 
-/* Luxury Nav Links */
+/* Green Color Wavy Menu Line Hover Effect */
 .nav-item-link {
     position: relative;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    padding-top: 0.25rem;
+    padding-bottom: 0.35rem;
+    transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s ease;
+    text-decoration: none;
+}
+
+.nav-item-link:hover {
+    color: #059669 !important;
+    transform: translateY(-1.5px);
 }
 
 .nav-item-link::after {
     content: '';
     position: absolute;
-    bottom: 4px;
-    left: 50%;
-    width: 0;
-    height: 2.5px;
-    background: linear-gradient(90deg, #10b981, #22c55e);
-    border-radius: 9999px;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    transform: translateX(-50%);
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 7px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 6'%3E%3Cpath d='M0 3 Q 6 0, 12 3 T 24 3' fill='none' stroke='%2310b981' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-size: 22px 6.5px;
+    background-position: 0 center;
+    opacity: 0;
+    transform: scaleX(0.2) translateY(3px);
+    transform-origin: center;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.45));
+    pointer-events: none;
 }
 
 .nav-item-link:hover::after {
-    width: calc(100% - 1.25rem);
+    opacity: 1;
+    transform: scaleX(1) translateY(0);
+    animation: wavyMenuFlow 0.75s linear infinite;
+}
+
+@keyframes wavyMenuFlow {
+    0% {
+        background-position-x: 0px;
+    }
+    100% {
+        background-position-x: 22px;
+    }
 }
 
 /* SCNEXTGEN Signature Badge */
@@ -400,7 +433,537 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 #welcomeSplash.dismissed {
     opacity: 0 !important;
-    transform: scale(1.05) !important;
+    transform: scale(1.06) !important;
     pointer-events: none !important;
 }
 
+@keyframes introLogoEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.65) translateY(24px) rotateY(-20deg);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.05) translateY(-4px) rotateY(0deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0) rotateY(0deg);
+    }
+}
+
+.intro-logo-3d {
+    animation: introLogoEntrance 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes introTextFadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.intro-text-fade {
+    animation: introTextFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+}
+
+/* ==========================================================
+   ADVANCED 3D LOOK & ANIMATION EXTENSIONS
+   ========================================================== */
+
+/* 1. Flagship Card 3D Treatment (Stretch Film ⭐) */
+.flagship-card-3d {
+    position: relative;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(240, 253, 244, 0.9) 100%);
+    border: 2px solid rgba(16, 185, 129, 0.45);
+    box-shadow: 
+        0 20px 50px -10px rgba(16, 185, 129, 0.2),
+        0 0 30px rgba(52, 211, 153, 0.15),
+        inset 0 1px 2px rgba(255, 255, 255, 1);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flagship-card-3d:hover {
+    transform: translateY(-8px) scale(1.008);
+    border-color: rgba(16, 185, 129, 0.85);
+    box-shadow: 
+        0 32px 70px -12px rgba(16, 185, 129, 0.32),
+        0 0 45px rgba(52, 211, 153, 0.28),
+        inset 0 1px 3px rgba(255, 255, 255, 1);
+}
+
+/* 2. Interactive 3D Card (Parallax Tilt Effect on Mouse Move) */
+.card-3d-interactive {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out, box-shadow 0.35s ease, border-color 0.35s ease;
+    will-change: transform;
+}
+
+.card-3d-interactive:hover {
+    box-shadow: 
+        0 24px 50px -10px rgba(6, 78, 59, 0.18),
+        0 0 25px rgba(52, 211, 153, 0.15);
+}
+
+/* 3. Scroll Reveal Animation System */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 4. Floating 3D Micro-Badges */
+.floating-3d-badge {
+    animation: floatingBadge 5s ease-in-out infinite;
+}
+
+@keyframes floatingBadge {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(1.5deg);
+    }
+}
+
+.floating-3d-badge-reverse {
+    animation: floatingBadgeReverse 6s ease-in-out infinite;
+}
+
+@keyframes floatingBadgeReverse {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(8px) rotate(-1.5deg);
+    }
+}
+
+/* 5. Glowing Pulsating Border */
+.glow-border-pulse {
+    animation: borderGlowPulse 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes borderGlowPulse {
+    0% {
+        border-color: rgba(16, 185, 129, 0.35);
+        box-shadow: 0 12px 35px -5px rgba(16, 185, 129, 0.15);
+    }
+    100% {
+        border-color: rgba(52, 211, 153, 0.8);
+        box-shadow: 0 22px 55px -5px rgba(16, 185, 129, 0.35), 0 0 30px rgba(52, 211, 153, 0.2);
+    }
+}
+
+/* 6. Tactile 3D Parameter Pill Chip */
+.spec-chip-3d {
+    background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    box-shadow: 0 3px 10px rgba(6, 78, 59, 0.06), inset 0 1px 0 #ffffff;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spec-chip-3d:hover {
+    transform: translateY(-2px) scale(1.03);
+    border-color: rgba(16, 185, 129, 0.6);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.15), inset 0 1px 0 #ffffff;
+}
+
+/* 7. World-Class 3D Emerald and Glass Interactive Buttons */
+.btn-3d-emerald {
+    background: linear-gradient(135deg, #059669 0%, #047857 50%, #064e3b 100%);
+    color: #ffffff !important;
+    border: 1px solid rgba(110, 231, 183, 0.45);
+    box-shadow: 
+        0 10px 25px -5px rgba(5, 150, 105, 0.45),
+        0 4px 8px -2px rgba(4, 120, 87, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.4),
+        inset 0 -2px 4px rgba(2, 44, 34, 0.4);
+    transform: translateY(0);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-3d-emerald:hover {
+    transform: translateY(-3px) scale(1.02);
+    background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+    border-color: rgba(167, 243, 208, 0.85);
+    box-shadow: 
+        0 18px 38px -5px rgba(16, 185, 129, 0.55),
+        0 8px 14px -2px rgba(5, 150, 105, 0.4),
+        0 0 25px rgba(52, 211, 153, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+.btn-3d-emerald:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 
+        0 5px 12px -2px rgba(5, 150, 105, 0.4),
+        inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.btn-3d-glass {
+    background: rgba(6, 40, 22, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    color: #6ee7b7 !important;
+    box-shadow: 
+        0 8px 20px -5px rgba(0, 0, 0, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-3d-glass:hover {
+    transform: translateY(-3px) scale(1.02);
+    background: rgba(16, 185, 129, 0.2);
+    border-color: rgba(110, 231, 183, 0.75);
+    color: #ffffff !important;
+    box-shadow: 
+        0 14px 28px -5px rgba(16, 185, 129, 0.35),
+        0 0 22px rgba(52, 211, 153, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.btn-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: skewX(-25deg);
+    animation: btnShimmerSweep 3.5s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes btnShimmerSweep {
+    0% { left: -120%; }
+    30%, 100% { left: 180%; }
+}
+
+/* ==========================================================
+   WORLD-CLASS 3D HOLOGRAPHIC & SPECULAR TILT SYSTEM
+   ========================================================== */
+
+/* 1. Master 3D Perspective Stage */
+.stage-3d-wrap {
+    perspective: 1200px;
+    transform-style: preserve-3d;
+}
+
+/* 2. Holographic 3D Card with Dynamic Interactive Specular Lighting */
+.card-3d-hologram {
+    position: relative;
+    background: linear-gradient(135deg, rgba(2, 22, 13, 0.96) 0%, rgba(5, 38, 22, 0.94) 50%, rgba(2, 18, 10, 0.98) 100%);
+    border: 1.5px solid rgba(52, 211, 153, 0.35);
+    border-radius: 2rem;
+    box-shadow: 
+        0 25px 65px -15px rgba(0, 0, 0, 0.8),
+        0 0 45px -10px rgba(16, 185, 129, 0.3),
+        inset 0 1px 2px rgba(110, 231, 183, 0.5),
+        inset 0 -1px 2px rgba(5, 150, 105, 0.3);
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.card-3d-hologram:hover {
+    border-color: rgba(74, 222, 128, 0.85);
+    box-shadow: 
+        0 35px 85px -15px rgba(0, 0, 0, 0.9),
+        0 0 65px -5px rgba(34, 197, 94, 0.5),
+        0 0 30px rgba(52, 211, 153, 0.35),
+        inset 0 1.5px 3px rgba(167, 243, 208, 0.75);
+}
+
+/* Tilt Card (Right Hero Card) - Matching Holo-Image-Frame Hover */
+.tilt-card {
+    position: relative;
+    border-radius: 2.2rem;
+    box-shadow: 
+        0 20px 40px -10px rgba(0, 0, 0, 0.7),
+        0 0 30px rgba(16, 185, 129, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    border: 2px solid rgba(74, 222, 128, 0.4);
+    transform-style: preserve-3d;
+    will-change: transform, box-shadow;
+    cursor: pointer;
+}
+
+.tilt-card:hover {
+    border-color: rgba(110, 231, 183, 0.95);
+    box-shadow: 
+        0 28px 60px -10px rgba(0, 0, 0, 0.85),
+        0 0 50px rgba(34, 197, 94, 0.55),
+        inset 0 2px 4px rgba(255, 255, 255, 0.7);
+}
+
+/* 3. Specular Glare / Flash Overlay following cursor */
+.specular-glare {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: radial-gradient(circle 480px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.28), rgba(52, 211, 153, 0.16) 32%, transparent 68%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    mix-blend-mode: overlay;
+    z-index: 25;
+}
+
+[data-tilt-card]:hover .specular-glare,
+.card-3d-hologram:hover .specular-glare,
+.holo-image-frame:hover .specular-glare,
+.tilt-card:hover .specular-glare {
+    opacity: 1;
+}
+
+/* 4. Multi-Layer 3D Depth Layers (Parallax Pop-Out) */
+.layer-3d-deep {
+    transform-style: preserve-3d;
+}
+
+.layer-3d-mid {
+    transform-style: preserve-3d;
+}
+
+.layer-3d-high {
+    transform-style: preserve-3d;
+}
+
+.layer-3d-super {
+    transform-style: preserve-3d;
+}
+
+/* 5. 3D Floating Holographic Image Frame */
+.holo-image-frame {
+    position: relative;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 
+        0 20px 40px -10px rgba(0, 0, 0, 0.7),
+        0 0 30px rgba(16, 185, 129, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    border: 2px solid rgba(74, 222, 128, 0.4);
+    transform-style: preserve-3d;
+    will-change: transform, box-shadow;
+    cursor: pointer;
+}
+
+.holo-image-frame:hover {
+    border-color: rgba(110, 231, 183, 0.95);
+    box-shadow: 
+        0 28px 60px -10px rgba(0, 0, 0, 0.85),
+        0 0 50px rgba(34, 197, 94, 0.55),
+        inset 0 2px 4px rgba(255, 255, 255, 0.7);
+}
+
+/* 6. Shimmering Edge Scan Line */
+.card-3d-hologram::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(52, 211, 153, 0.15) 60deg, transparent 120deg);
+    animation: rotateHoloBorder 8s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.7;
+}
+
+@keyframes rotateHoloBorder {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 7. Dark Luxury Hero Theme & Text Overrides */
+.hero-dark-luxury {
+    background: radial-gradient(ellipse 90% 60% at 50% -15%, rgba(16, 185, 129, 0.22) 0%, transparent 70%),
+                radial-gradient(circle at 10% 30%, rgba(5, 150, 105, 0.16) 0%, transparent 40%),
+                radial-gradient(circle at 90% 70%, rgba(34, 197, 94, 0.12) 0%, transparent 45%),
+                linear-gradient(180deg, #02140b 0%, #041f12 50%, #03170e 100%) !important;
+    color: #ecfdf5 !important;
+}
+
+.hero-dark-luxury h1,
+.hero-dark-luxury h2,
+.hero-dark-luxury h3,
+.hero-dark-luxury .hero-title-light {
+    color: #ffffff !important;
+}
+
+.hero-dark-luxury p.hero-lead-text {
+    color: #a7f3d0 !important;
+}
+
+.hero-dark-luxury p.hero-sub-text {
+    color: #d1fae5 !important;
+    opacity: 0.88;
+}
+
+.hero-dark-luxury .hero-tagline-dark {
+    background: rgba(4, 30, 17, 0.85) !important;
+    border-color: rgba(52, 211, 153, 0.45) !important;
+    color: #6ee7b7 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(110, 231, 183, 0.3) !important;
+}
+
+.hero-dark-luxury .hero-trust-tag {
+    color: #6ee7b7 !important;
+}
+
+/* ==========================================================
+   LUXURY QUOTE CARD & SECTION (Dark Green, Light Green, White)
+   ========================================================== */
+
+/* 1. Master Quote Card Container */
+.quote-luxury-card {
+    background: linear-gradient(150deg, #052212 0%, #08381e 45%, #041d0f 100%) !important;
+    border: 2px solid rgba(52, 211, 153, 0.45);
+    border-radius: 2.5rem;
+    box-shadow: 
+        0 30px 80px -15px rgba(2, 20, 10, 0.75),
+        0 0 50px -10px rgba(16, 185, 129, 0.25),
+        inset 0 1px 2px rgba(167, 243, 208, 0.4),
+        inset 0 -2px 4px rgba(2, 30, 15, 0.6);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.quote-luxury-card:hover {
+    border-color: rgba(74, 222, 128, 0.8);
+    box-shadow: 
+        0 40px 95px -15px rgba(2, 20, 10, 0.85),
+        0 0 65px -5px rgba(34, 197, 94, 0.4),
+        inset 0 1.5px 3px rgba(167, 243, 208, 0.6);
+    transform: translateY(-4px);
+}
+
+/* 2. Shimmer sweep on quote card perimeter */
+.quote-luxury-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 50% 20%, rgba(52, 211, 153, 0.12), transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 3. High-Contrast Pure White Input Boxes */
+.quote-input-white {
+    background-color: #ffffff !important;
+    color: #052e16 !important;
+    border: 2px solid #a7f3d0 !important;
+    border-radius: 1rem;
+    font-weight: 700;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.quote-input-white::placeholder {
+    color: rgba(5, 46, 22, 0.42) !important;
+    font-weight: 500;
+}
+
+.quote-input-white:hover {
+    border-color: #34d399 !important;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.18);
+}
+
+.quote-input-white:focus {
+    outline: none !important;
+    border-color: #10b981 !important;
+    box-shadow: 
+        0 0 0 4px rgba(52, 211, 153, 0.3),
+        0 6px 20px rgba(16, 185, 129, 0.25) !important;
+    transform: translateY(-1px);
+}
+
+/* 4. Luxury Quote Label with Light Green & Mint Pill */
+.quote-label-light {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #a7f3d0 !important;
+    margin-bottom: 0.5rem;
+}
+
+.quote-label-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.5rem;
+    background: rgba(52, 211, 153, 0.18);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    color: #34d399;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+/* 5. Parameter Step Chip (Dark Green, Light Green, White) */
+.quote-step-chip {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 244, 0.9) 100%);
+    border: 1.5px solid rgba(52, 211, 153, 0.4);
+    box-shadow: 0 6px 18px -3px rgba(6, 78, 59, 0.08), inset 0 1px 1px #ffffff;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.quote-step-chip:hover {
+    transform: translateY(-2px);
+    border-color: rgba(16, 185, 129, 0.7);
+    box-shadow: 0 10px 25px -4px rgba(16, 185, 129, 0.2), inset 0 1px 2px #ffffff;
+}
+
+/* 6. Trust Value Prop Pills inside Quote Card */
+.quote-trust-pill {
+    background: rgba(6, 36, 20, 0.75);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #d1fae5;
+    transition: all 0.25s ease;
+}
+
+.quote-trust-pill:hover {
+    background: rgba(8, 48, 27, 0.9);
+    border-color: rgba(52, 211, 153, 0.6);
+    transform: translateY(-2px);
+}
