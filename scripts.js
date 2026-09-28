@@ -1,925 +1,1208 @@
-        // 1. Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-
-        function toggleMobileMenu() {
-            mobileMenu.classList.toggle('hidden');
-        }
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-
-        // Close mobile menu on clicking any navigation link
-        document.querySelectorAll('.mobile-link').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
-
-        // 2. Sticky Navbar Visual Elevation
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 40) {
-                navbar.classList.add('shadow-md');
-                navbar.classList.replace('bg-white/90', 'bg-white/98');
-            } else {
-                navbar.classList.remove('shadow-md');
-                navbar.classList.replace('bg-white/98', 'bg-white/90');
-            }
-        });
-
-        // 3. Product Catalog Category Filtering & RFQ Linking
-        function filterProducts(category) {
-            // Update active tab buttons based on data-cat attribute
-            const buttons = document.querySelectorAll('.product-tab-btn');
-            buttons.forEach(btn => {
-                if (btn.dataset.cat === category) {
-                    btn.classList.remove('bg-gray-100', 'text-gray-700');
-                    btn.classList.add('bg-gle-600', 'text-white', 'shadow-md');
-                } else {
-                    btn.classList.remove('bg-gle-600', 'text-white', 'shadow-md');
-                    btn.classList.add('bg-gray-100', 'text-gray-700');
-                }
-            });
-
-            // Filter items in the product grid
-            const cards = document.querySelectorAll('.product-card');
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            // Smooth scroll to product grid if triggered from category showcase above
-            const filterTabs = document.getElementById('productFilterTabs');
-            if (filterTabs && window.scrollY < filterTabs.offsetTop - 250) {
-                filterTabs.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
-        // Helper: Request Quotation pre-selects RFQ form and smoothly scrolls to contact section
-        function requestProductQuote(categoryName, productName) {
-            const quoteProductSelect = document.getElementById('quoteProduct');
-            if (quoteProductSelect) {
-                const targetCat = categoryName.toLowerCase();
-                for (let i = 0; i < quoteProductSelect.options.length; i++) {
-                    const optText = quoteProductSelect.options[i].text.toLowerCase();
-                    const optVal = quoteProductSelect.options[i].value.toLowerCase();
-                    if (optText.includes(targetCat) || optVal.includes(targetCat) || targetCat.includes(optVal)) {
-                        quoteProductSelect.selectedIndex = i;
-                        break;
-                    }
-                }
-            }
-
-            const messageField = document.getElementById('quoteMessage');
-            if (messageField && productName) {
-                messageField.value = `Inquiry regarding ${productName} (${categoryName} range). Please provide wholesale quotation, minimum order quantities, and available sizes.`;
-            }
-
-            const contactSection = document.getElementById('contact');
-            if (contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-                setTimeout(() => {
-                    const nameInput = document.getElementById('quoteName');
-                    if (nameInput) nameInput.focus();
-                }, 600);
-            }
-        }
-
-        // 4. Interactive Film Calculator Logic
-        function updateWeightLabel(val) {
-            const el = document.getElementById('calcWeightLabel');
-            if (el) el.innerText = val + ' kg';
-        }
-
-        function calculateRecommendation() {
-            const calcApp = document.getElementById('calcApp');
-            if (!calcApp) return;
-            const methodEl = document.querySelector('input[name="calcMethod"]:checked');
-            if (!methodEl) return;
-            const weightEl = document.getElementById('calcWeight');
-            if (!weightEl) return;
-
-            const app = calcApp.value;
-            const method = methodEl.value;
-            const weight = parseInt(weightEl.value) || 500;
-
-            let gauge = '20 Micron';
-            let filmType = 'High-Grade Manual Stretch Film';
-            let desc = 'Balanced puncture resistance and reliable elastic holding.';
-            let width = '500 mm';
-            let yieldStr = '200% - 250%';
-            let strap = '12mm PP Strap + PP Clips';
-
-            if (app === 'coir-rubber') {
-                if (weight > 800) {
-                    gauge = '25 - 30 Micron';
-                    filmType = 'Ultra Heavy-Duty Compressible Wrap';
-                    desc = 'Engineered specifically for coir peat bricks and rubber bales that expand or exert high outward tensile thrust.';
-                    strap = '15mm - 18mm PP Strap + Steel Seals';
-                    yieldStr = '280% - 320%';
-                } else {
-                    gauge = '23 Micron';
-                    filmType = 'Heavy-Duty Coir & Baling Film';
-                    desc = 'Excellent elastic memory, locking compressed materials against moisture and expansion.';
-                    strap = '15mm PP Strap + PP Clips';
-                }
-            } else if (app === 'parts-bundling') {
-                gauge = '17 - 20 Micron';
-                filmType = 'Mini Bundling Stretch Film (Baby Roll)';
-                desc = 'Ideal for bundling loose tubes, pipes, timber and multi-carton batches cleanly with zero glue residue.';
-                width = '100mm / 150mm';
-                yieldStr = '150% - 200%';
-                strap = '9mm - 12mm PP Strap';
-            } else if (app === 'agricultural') {
-                gauge = '25 - 35 Micron';
-                filmType = 'Agricultural Silage & Barrier Film';
-                desc = 'Co-extruded multi-layer barrier film designed for outdoor agricultural storage and weather protection.';
-                width = '500mm / 750mm';
-                yieldStr = '250%';
-                strap = '15mm Heavy PP Strap';
-            } else {
-                // standard or heavy pallet
-                if (method === 'machine') {
-                    if (weight > 1000) {
-                        gauge = '23 - 30 Micron';
-                        filmType = 'Power Pre-Stretch Machine Film';
-                        desc = 'Maximum load retention for high-speed turntable wrapper machines handling heavy export pallets.';
-                        yieldStr = 'Up to 320%';
-                        strap = '15mm Machine-Grade PP Strap';
-                    } else {
-                        gauge = '20 Micron';
-                        filmType = 'Standard Pre-Stretch Machine Roll';
-                        desc = 'High-yield stretch film reducing packaging cost per pallet by up to 35%.';
-                        yieldStr = '250%';
-                        strap = '12mm PP Strap';
-                    }
-                } else {
-                    // manual
-                    if (weight > 1000) {
-                        gauge = '23 Micron';
-                        filmType = 'Extra Heavy Manual Hand Wrap';
-                        desc = 'High puncture resistance against wooden pallets and heavy cartons.';
-                        strap = '15mm PP Strap + PP Clips';
-                    } else {
-                        gauge = '17 - 20 Micron';
-                        filmType = 'Standard Hand Stretch Film';
-                        desc = 'Lightweight, ergonomic rolls for fast factory floor wrapping without worker fatigue.';
-                        strap = '12mm PP Strap + PP Clips';
-                    }
-                }
-            }
-
-            document.getElementById('recGauge').innerText = gauge;
-            document.getElementById('recFilmType').innerText = filmType;
-            document.getElementById('recDesc').innerText = desc;
-            document.getElementById('recWidth').innerText = width;
-            document.getElementById('recYield').innerText = yieldStr;
-            document.getElementById('recStrap').innerText = strap;
-
-            const waText = encodeURIComponent(`Hello GLE! Based on your packaging calculator for a ${weight}kg load, I am interested in: ${gauge} ${filmType} (${width}). Please provide quotation.`);
-            document.getElementById('recWhatsAppBtn').href = `https://wa.me/94773248520?text=${waText}`;
-        }
-
-        // 5. Product Specification Modal Data
-        const productSpecs = {
-            'stretch-film': {
-                title: 'High-Grade Pallet Stretch Film (Hand & Machine)',
-                image: './assets/stretch-film-flagship.jpg',
-                subtitle: 'Linear Low Density Polyethylene (LLDPE) • Industrial Grade',
-                description: 'Our flagship stretch film is engineered for secure wrapping, load stability, and safe transport. It preserves goods against moisture, humidity, dust, and physical transit vibration.',
-                category: 'Stretch Film',
-                specs: [
-                    ['Polymer Base', 'High-Grade Industrial LLDPE'],
-                    ['Thickness Options', '15μm, 17μm, 20μm, 23μm, 25μm, 30μm'],
-                    ['Standard Width', '500 mm (Custom 100mm to 750mm)'],
-                    ['Stretch Elongation', 'Up to 300% Pre-stretch'],
-                    ['Cling Characteristic', 'Smooth non-tacky outer, high cling inner'],
-                    ['Puncture Resistance', 'High Tear & Puncture Resistance'],
-                    ['Material Grade', 'Virgin / High-Clarity Industrial LLDPE'],
-                    ['Availability', 'In Stock • Available from GLE (Direct Wholesale Supply)']
-                ]
-            },
-            'mini-bundling': {
-                title: 'Mini Bundling Stretch Film Rolls (Baby Film)',
-                image: './assets/mini-bundling-rolls.jpg',
-                subtitle: 'Extended Core & Hand Dispenser Compatible',
-                description: 'Engineered for swift grouping of items that previously required tapes. Does not leave sticky glue markings on furniture, chrome pipes, or retail packaging.',
-                category: 'Stretch Film',
-                specs: [
-                    ['Available Widths', '100 mm (4 Inch) & 150 mm (6 Inch)'],
-                    ['Micron Range', '17 Micron, 20 Micron, 23 Micron'],
-                    ['Core Type', 'Ergonomic Extended Core or Standard 1.5 Inch'],
-                    ['Packaging Unit', '24 or 36 Rolls per corrugated master carton'],
-                    ['Best For', 'Pipes, timber rods, wire reels, grouping carton packs'],
-                    ['Availability', 'Available from GLE']
-                ]
-            },
-            'aluminium-packaging': {
-                title: 'Aluminium Food Containers & Heavy-Duty Foil Rolls',
-                image: './assets/cat-aluminium.jpg',
-                subtitle: 'Food-Grade Aluminium Foil • Oven, Grill & Freezer Safe',
-                description: 'Food-grade aluminium packaging providing superior barrier against light, moisture, and odors. Perfect for takeaway restaurants, caterers, and bakeries requiring leak-proof and heat-retaining containers.',
-                category: 'Aluminium Packaging',
-                specs: [
-                    ['Product Types', 'Rectangular Food Containers, Round Foil Bowls, Foil Rolls'],
-                    ['Available Sizes', 'Multiple options & capacities with cardboard/foil lids'],
-                    ['Temperature Range', '-40°C Freezer to +280°C Conventional Oven Safe'],
-                    ['Material Grade', 'Pure High-Purity Food Contact Aluminium'],
-                    ['Application', 'Hot & cold takeaway meals, biryani, pasta, lasagna, baking'],
-                    ['Availability', 'Available from GLE (Wholesale Master Cartons)']
-                ]
-            },
-            'catering-packaging': {
-                title: 'Commercial Catering & Food Service Essentials',
-                image: './assets/cat-catering.jpg',
-                subtitle: 'Professional Kitchen & Bakery Grade Packaging Range',
-                description: 'Complete range of catering supplies essential for busy restaurants, clouds kitchens, caterers, and bakeries. Formulated for food safety, hygiene, and efficiency.',
-                category: 'Catering Products',
-                specs: [
-                    ['Catalogue Items', 'Baking Paper, Piping Bags, Cake Boards, Straws, Chef Hats'],
-                    ['Food Packaging', 'Pizza Boxes, Zipper Bags, Food Vacuum Bags, Cling Film'],
-                    ['Hygiene & Service', 'Food Service Gloves, Toothpicks, Chopsticks, Disposable Cutlery'],
-                    ['Available Sizes', 'Multiple commercial sizes and wholesale pack options'],
-                    ['Compliance', 'Food Contact Safe & Non-Toxic'],
-                    ['Availability', 'Available from GLE (Direct Wholesale Supply)']
-                ]
-            },
-            'ecofriendly-packaging': {
-                title: 'Meal Boxes & Sugarcane Bagasse Trays',
-                image: './assets/cat-ecofriendly.jpg',
-                subtitle: 'Natural Plant-Fiber Food Packaging',
-                description: 'Natural sugarcane bagasse tableware designed for takeaway restaurants, cloud kitchens, and catering. Heat-tolerant, oil-resistant, and rigid without chemical wax linings.',
-                category: 'Bagasse Packaging',
-                specs: [
-                    ['Products Included', 'Compartment Meal Trays, Food Boxes, Bowls, Cups & Lids'],
-                    ['Material Origin', 'Natural Sugarcane Fiber (Bagasse)'],
-                    ['Thermal Rating', 'Microwave safe up to 120°C, Freezer safe to -20°C'],
-                    ['Oil Resistance', 'Waterproof and grease-resistant without chemical wax'],
-                    ['Construction', 'Rigid molded fiber with high dimensional strength'],
-                    ['Availability', 'Available from GLE']
-                ]
-            },
-            'paper-packaging': {
-                title: 'Bakery Paper Packaging & Insulated Cups',
-                image: './assets/cat-paper.jpg',
-                subtitle: 'Confectionery, Bakery & Cafe Packaging Range',
-                description: 'Aesthetic, food-safe paper packaging designed to elevate bakery and confectionery display while ensuring freshness during transit.',
-                category: 'Paper Products',
-                specs: [
-                    ['Products Included', 'Decorative Doilies, Cupcake Liners, Window Cake Boxes, Paper Cups'],
-                    ['Paper Quality', 'Food-Grade Bleached and Kraft Board'],
-                    ['Cup Capacities', '4oz, 6oz, 8oz, 12oz, 16oz single & double wall with lids'],
-                    ['Liners & Doilies', 'Greaseproof fluted liners & lace round/oval doilies'],
-                    ['Application', 'Bakery display, cafe takeaway, patisseries, banquet service'],
-                    ['Availability', 'Available from GLE']
-                ]
-            },
-            'plastic-packaging': {
-                title: 'Food-Grade Plastic Packaging & HIPS Containers',
-                image: './assets/cat-plastic.jpg',
-                subtitle: 'Clear Beverage Cups, Sauce Tubs & Rigid HIPS Meal Trays',
-                description: 'Durable, crystal-clear plastic packaging for beverages and salads, alongside high-impact polystyrene (HIPS) rigid meal trays and secure portion cups.',
-                category: 'Plastic Products',
-                specs: [
-                    ['Products Included', 'Drinking Cups & Lids, Sauce Containers, Plastic Trays, HIPS Containers'],
-                    ['Polymers', 'Food-Grade Polypropylene (PP), PET & High-Impact Polystyrene (HIPS)'],
-                    ['Lid Options', 'Leak-proof Flat Lids, Dome Lids with Straw Holes, Snap Lids'],
-                    ['Available Sizes', '1oz to 32oz capacities; 1, 2, 3, 4 compartment meal trays'],
-                    ['Clarity & Strength', 'High transparency, crack resistant & leak-proof seal'],
-                    ['Availability', 'Available from GLE']
-                ]
-            },
-            'wooden-packaging': {
-                title: 'Natural Wooden & Bamboo Catering Products',
-                image: './assets/cat-wooden.jpg',
-                subtitle: 'Smooth Polished Bamboo Skewers, Boat Trays & Cutlery',
-                description: 'High-quality natural bamboo skewers, cocktail knot skewers, paddle skewers, rustic wooden boat trays, and disposable wooden cutlery for dining and events.',
-                category: 'Wooden Products',
-                specs: [
-                    ['Products Included', 'BBQ Sticks, Knot Skewers, Looper Skewers, Paddle Skewers, Wooden Boats, Wooden Cups'],
-                    ['Material', '100% Natural Bamboo & Birch Wood (Chemical Free)'],
-                    ['Finish', 'Machine-polished, splinter-free, heat-resistant for grilling'],
-                    ['Sizes Available', '10cm to 30cm skewer lengths, varied boat tray volumes'],
-                    ['Application', 'BBQ grilling, satay, cocktail appetizers, finger food catering'],
-                    ['Availability', 'Available from GLE']
-                ]
-            },
-            'kraft-packaging': {
-                title: 'Natural Brown Kraft Paper Containers & Bags',
-                image: './assets/cat-kraft.jpg',
-                subtitle: 'Unbleached Natural Kraft Takeaway Boxes & Pouch Bags',
-                description: 'Earthy, modern kraft paper containers featuring grease-resistant PE/PLA interior coatings, fold-lock lunch boxes, stand-up pouch bags, and sturdy carry bags.',
-                category: 'Kraft Packaging',
-                specs: [
-                    ['Products Included', 'Kraft Containers, SHA Boxes, Cake Cup Boxes, Lunch Boxes, Pouch Bags, Kraft Trays, Paper Bags'],
-                    ['Board Material', 'High-burst strength Brown Kraft Paperboard'],
-                    ['Lining', 'Food-grade moisture and oil-resistant inner lining'],
-                    ['Formats', 'Fold-top lunch cartons, window bakery boxes, stand-up zip pouches'],
-                    ['Handle Bags', 'Twisted paper handles with reinforced bottom base'],
-                    ['Availability', 'Available from GLE']
-                ]
-            },
-            'pp-strapping': {
-                title: 'Polypropylene (PP) Strapping Bands',
-                image: './assets/cat-pp-strapping.jpg',
-                subtitle: 'Manual Hand Tools & Power Machine Strappers',
-                description: 'High tensile strength polypropylene bands designed for bundling and carton closure. Features diamond embossing to minimize tool tensioning slippage.',
-                category: 'Other Packaging',
-                specs: [
-                    ['Width Range', '5mm, 9mm, 12mm, 15mm, 18mm'],
-                    ['Tensile Strength', 'Up to 280 kg/f depending on width'],
-                    ['Surface Finish', 'Diamond Embossed Anti-Slip'],
-                    ['Color Choices', 'Blue, Yellow, Red, Green, White, Black'],
-                    ['Custom Printing', 'Company logo & trade name printed to order'],
-                    ['Core Dimensions', '200mm standard machine core or cardboard reel'],
-                    ['Availability', 'Available from GLE (In Stock)']
-                ]
-            },
-            'packaging-tape': {
-                title: 'OPP Carton Sealing & Packaging Tapes',
-                image: './assets/cat-packaging-tape.jpg',
-                subtitle: 'Heavy-Duty Brown & Crystal Clear Adhesive Tapes',
-                description: 'High-tack acrylic water-based & hot-melt adhesive packaging tapes engineered for firm carton box closure, export shipping, and warehouse sealing.',
-                category: 'Other Packaging',
-                specs: [
-                    ['Width Available', '48mm (2 Inch), 72mm (3 Inch)'],
-                    ['Length', '50m, 100m, 200m Industrial Rolls'],
-                    ['Film Type', 'Biaxially Oriented Polypropylene (BOPP)'],
-                    ['Color', 'Brown (Tan), Crystal Clear Transparent'],
-                    ['Adhesion Strength', 'High-shear peel adhesion, instant tack'],
-                    ['Availability', 'Available from GLE']
-                ]
-            },
-            'garbage-bags': {
-                title: 'Heavy-Duty Garbage Bags & Bin Liners',
-                image: './assets/cat-garbage-bags.jpg',
-                subtitle: 'Tear-Resistant Commercial & Industrial Waste Bags',
-                description: 'Heavy gauge polyethylene trash bags and roll liners designed for hotels, industrial plants, restaurants, and commercial facilities. Gusseted bottoms prevent leaks and punctures.',
-                category: 'Plastic Products',
-                specs: [
-                    ['Materials', 'Virgin & Recycled High-Grade LDPE / HDPE'],
-                    ['Sizes Available', 'Small (10L), Medium (30L), Large (60L), Jumbo (120L - 240L)'],
-                    ['Colors', 'Industrial Black, Clear, Yellow (Clinical)'],
-                    ['Format', 'Continuous Perforated Rolls & Flat Fold Packs'],
-                    ['Leak Resistance', 'Star-seal & heavy gusset bottom'],
-                    ['Availability', 'Available from GLE']
-                ]
-            },
-            'nitrile-gloves': {
-                title: 'Nitrile Gloves & Disposable Protection Supplies',
-                image: './assets/cat-nitrile-gloves.jpg',
-                subtitle: 'Powder-Free Examination Gloves & Hygiene Disposables',
-                description: 'Medical-grade, food-safe blue nitrile gloves providing chemical resistance, textured grip, and superior puncture barrier alongside disposable hygienic sheets and aprons.',
-                category: 'Catering Products',
-                specs: [
-                    ['Material', '100% Synthetic Nitrile (Latex-Free, Powder-Free)'],
-                    ['Sizes Available', 'Small (S), Medium (M), Large (L), Extra Large (XL)'],
-                    ['Texture', 'Micro-textured fingertips for secure wet/dry grip'],
-                    ['Standards', 'Food Contact Safe & Industrial Hygiene Standard'],
-                    ['Additional Items', 'Disposable Surgical Bed Sheets, Plastic Aprons'],
-                    ['Availability', 'Available from GLE']
-                ]
-            },
-            'strapping-clips': {
-                title: 'Strapping Clips & Seals (PP Plastic & Steel)',
-                image: './assets/plastic-clips-square.jpg',
-                subtitle: 'Tool-Free PP Buckles & High-Shear Steel Crimp Seals',
-                description: 'PP Plastic Clips can be applied manually without any tensioning tools and provide a fast, secure joint with the strap. Heavy Steel Seals provide permanent crimp hold for high-tension strapping.',
-                category: 'Other Packaging',
-                specs: [
-                    ['Plastic Clip Material', '100% High-Strength Polypropylene (PP)'],
-                    ['Steel Seal Material', 'High-Grade Galvanized Steel'],
-                    ['Sizes Available', '12mm, 15mm, 19mm Widths'],
-                    ['Advantage of Plastic', 'Zero sharp edges, non-scratch, zero rust'],
-                    ['Advantage of Steel', 'Extreme shear resistance for heavy export pallets'],
-                    ['Availability', 'Available from GLE']
-                ]
-            },
-            'machine-stretch': {
-                title: 'Power Pre-Stretch Machine Rolls',
-                image: './assets/pallet-stretch-rolls.jpg',
-                subtitle: 'Automated Turntable & Rotary Wrapping Lines',
-                description: 'Engineered for high-volume automated lines. Consistent gauge profile ensures zero web-breakage down-time and maximum wrapping cost efficiency.',
-                category: 'Stretch Film',
-                specs: [
-                    ['Pre-Stretch Rating', '250% – 320% Yield'],
-                    ['Roll Weight', '12 kg to 16 kg Rolls'],
-                    ['Micron Gauges', '20μm, 23μm, 29μm, 35μm'],
-                    ['Core Size', '3 Inch (76mm) Heavy Paper Core'],
-                    ['Pallet Unitization', 'Extreme holding for container export'],
-                    ['Availability', 'Available from GLE (Direct Wholesale Supply)']
-                ]
-            },
-            'silage-film': {
-                title: 'Agricultural Silage & Barrier Film',
-                image: './assets/cat-silage-film.jpg',
-                subtitle: 'Heavy-Duty Agricultural Barrier Grade',
-                description: 'Multi-layer blown film designed for tropical agricultural environments. Creates a protective seal against moisture and outdoor weather conditions.',
-                category: 'Stretch Film',
-                specs: [
-                    ['Weather Protection', 'Outdoor Moisture & Weather Resistance'],
-                    ['Thickness', '25 Micron to 35 Micron'],
-                    ['Available Colors', 'White (Heat Reflective), Green, Black'],
-                    ['Applications', 'Forage, silage bales, outdoor construction covers'],
-                    ['Availability', 'Available from GLE']
-                ]
-            }
-        };
-        productSpecs['strapping-accessories'] = productSpecs['strapping-clips'];
-
-        function openProductModal(key) {
-            const data = productSpecs[key];
-            if (!data) return;
-
-            let specsHtml = data.specs.map(s => `
-                <tr class="border-b border-gray-100">
-                    <td class="py-2.5 text-xs font-bold text-gray-700 w-1/3">${s[0]}</td>
-                    <td class="py-2.5 text-xs text-gray-600">${s[1]}</td>
-                </tr>
-            `).join('');
-
-            document.getElementById('modalContent').innerHTML = `
-                <div class="flex flex-col sm:flex-row items-start gap-4 mb-6">
-                    <img src="${data.image}" alt="${data.title}" class="w-full sm:w-32 h-32 object-cover bg-gray-50 rounded-2xl border p-1 shadow-sm">
-                    <div class="flex-1">
-                        <span class="text-[11px] font-bold text-gle-700 bg-gle-50 px-2.5 py-1 rounded-full uppercase tracking-wider">GLE Product Specification Sheet</span>
-                        <h3 class="text-xl font-bold text-gray-900 mt-1">${data.title}</h3>
-                        <p class="text-xs text-gray-500 font-medium mt-0.5">${data.subtitle}</p>
-                    </div>
-                </div>
-                <p class="text-xs text-gray-600 leading-relaxed mb-6">${data.description}</p>
-                <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 mb-6">
-                    <h4 class="text-xs font-bold text-gray-900 uppercase tracking-wider mb-2">Technical Parameters & Overview</h4>
-                    <table class="w-full text-left">
-                        <tbody>${specsHtml}</tbody>
-                    </table>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <button onclick="closeProductModal(); requestProductQuote('${data.category || 'Packaging'}', '${data.title}');" class="flex-1 py-3 px-4 rounded-xl bg-gle-600 hover:bg-gle-700 text-white font-bold text-xs text-center flex items-center justify-center gap-2 shadow-sm">
-                        <i class="fa-solid fa-file-invoice"></i>
-                        <span>Request a Quotation</span>
-                    </button>
-                    <a href="https://wa.me/94773248520?text=I%20would%20like%20a%20quotation%20for%20${encodeURIComponent(data.title)}" target="_blank" class="py-3 px-4 rounded-xl bg-gle-50 text-gle-700 hover:bg-gle-600 hover:text-white font-bold text-xs text-center flex items-center justify-center gap-2 transition-colors">
-                        <i class="fa-brands fa-whatsapp text-sm"></i>
-                        <span>WhatsApp RFQ</span>
-                    </a>
-                    <button onclick="closeProductModal()" class="py-3 px-5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs">
-                        Close
-                    </button>
-                </div>
-            `;
-
-            document.getElementById('productDetailModal').classList.remove('hidden');
-            document.getElementById('productDetailModal').classList.add('flex');
-        }
-
-        function closeProductModal() {
-            document.getElementById('productDetailModal').classList.add('hidden');
-            document.getElementById('productDetailModal').classList.remove('flex');
-        }
-
-        // 6. Universal Modern Toast Notification System
-        function showToast(message, type = 'success') {
-            let container = document.getElementById('toastContainer');
-            if (!container) {
-                container = document.createElement('div');
-                container.id = 'toastContainer';
-                container.className = 'fixed bottom-6 right-6 z-50 flex flex-col gap-2.5 max-w-sm w-full px-4 sm:px-0 pointer-events-none';
-                document.body.appendChild(container);
-            }
-
-            const toast = document.createElement('div');
-            const isWarning = type === 'warning';
-            toast.className = `pointer-events-auto transform transition-all duration-300 translate-y-4 opacity-0 p-4 rounded-2xl shadow-2xl flex items-center gap-3 border ${
-                isWarning 
-                    ? 'border-amber-300 bg-amber-50/95 text-amber-950 backdrop-blur-md' 
-                    : 'border-emerald-500/30 bg-white/95 text-slate-900 backdrop-blur-md shadow-emerald-500/10'
-            }`;
-
-            const iconClass = isWarning ? 'fa-triangle-exclamation text-amber-500' : 'fa-circle-check text-emerald-500';
-
-            toast.innerHTML = `
-                <div class="w-8 h-8 rounded-xl ${isWarning ? 'bg-amber-100' : 'bg-emerald-100'} flex items-center justify-center flex-shrink-0 text-sm">
-                    <i class="fa-solid ${iconClass}"></i>
-                </div>
-                <div class="flex-1 min-w-0">
-                    <p class="text-xs font-bold leading-snug">${message}</p>
-                </div>
-                <button onclick="this.parentElement.remove()" class="text-gray-400 hover:text-gray-600 text-xs p-1">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            `;
-
-            container.appendChild(toast);
-
-            requestAnimationFrame(() => {
-                toast.classList.remove('translate-y-4', 'opacity-0');
-                toast.classList.add('translate-y-0', 'opacity-100');
-            });
-
-            setTimeout(() => {
-                toast.classList.remove('opacity-100', 'translate-y-0');
-                toast.classList.add('opacity-0', 'translate-y-4');
-                setTimeout(() => toast.remove(), 300);
-            }, 4500);
-        }
-
-        // 7. Executive WhatsApp RFQ Quotation Formatter
-        function sendQuoteToWhatsApp(isDirect = false) {
-            const nameInput = document.getElementById('quoteName');
-            const companyInput = document.getElementById('quoteCompany');
-            const phoneInput = document.getElementById('quotePhone');
-            const emailInput = document.getElementById('quoteEmail');
-            const productSelect = document.getElementById('quoteProduct');
-            const volumeSelect = document.getElementById('quoteVolume');
-            const sizeInput = document.getElementById('quoteSize');
-            const micronInput = document.getElementById('quoteMicron');
-            const locationInput = document.getElementById('quoteLocation');
-            const messageInput = document.getElementById('quoteMessage');
-
-            const name = (nameInput ? nameInput.value : '').trim();
-            const company = (companyInput ? companyInput.value : '').trim();
-            const phone = (phoneInput ? phoneInput.value : '').trim();
-            const email = (emailInput && emailInput.value.trim()) ? emailInput.value.trim() : 'Not Provided';
-            const product = productSelect ? productSelect.options[productSelect.selectedIndex].text : 'Stretch Film & Packaging';
-            const volume = volumeSelect ? volumeSelect.options[volumeSelect.selectedIndex].text : 'Regular Monthly Supply';
-            const size = sizeInput ? sizeInput.value.trim() : '';
-            const micron = micronInput ? micronInput.value.trim() : '';
-            const location = locationInput ? locationInput.value.trim() : '';
-            const notes = (messageInput && messageInput.value.trim()) ? messageInput.value.trim() : 'Please provide wholesale quotation, minimum order quantities (MOQ), and delivery schedule.';
-
-            // Validation with smooth focus
-            if (!name) {
-                showToast('Please enter your Full Name', 'warning');
-                if (nameInput) nameInput.focus();
-                return;
-            }
-            if (!company) {
-                showToast('Please enter your Company / Business Name', 'warning');
-                if (companyInput) companyInput.focus();
-                return;
-            }
-            if (!phone) {
-                showToast('Please enter your Phone / WhatsApp Number', 'warning');
-                if (phoneInput) phoneInput.focus();
-                return;
-            }
-
-            // Current date and time formatting
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-
-            const inquiryType = isDirect ? 'DIRECT WHATSAPP INQUIRY' : 'OFFICIAL QUOTATION REQUEST (RFQ)';
-
-            let reqDetails = `• *Product:* ${product}\n`;
-            if (size) reqDetails += `• *Size / Width:* ${size}\n`;
-            if (micron) reqDetails += `• *Micron / Gauge:* ${micron}\n`;
-            reqDetails += `• *Monthly Quantity:* ${volume}\n`;
-            if (location) reqDetails += `• *Delivery Location:* ${location}\n`;
-
-            // Cleanly formatted WhatsApp Message with bolding, sections, and emojis
-            const formattedMessage = 
-`━━━━━━━━━━━━━━━━━━━━━
-🟢 *GREEN LIGHT ENTERPRISES*
-📋 *${inquiryType}*
-━━━━━━━━━━━━━━━━━━━━━
-
-👤 *CLIENT INFORMATION*
-• *Full Name:* ${name}
-• *Company / Business:* ${company}
-• *Phone / WhatsApp:* ${phone}
-• *Email:* ${email}
-
-📦 *PACKAGING REQUIREMENTS*
-${reqDetails}
-📍 *NOTES & SPECIAL INSTRUCTIONS*
-${notes}
-
-━━━━━━━━━━━━━━━━━━━━━
-🏭 *Supplier:* Green Light Enterprises
-📍 *Location:* Ja-Ela, Sri Lanka
-📞 *Hotline:* +94 77 324 8520 / 011 224 4746
-⏰ *Timestamp:* ${dateStr} at ${timeStr}
-━━━━━━━━━━━━━━━━━━━━━`;
-
-            const encodedMsg = encodeURIComponent(formattedMessage);
-            const waUrl = `https://wa.me/94773248520?text=${encodedMsg}`;
-
-            // Open WhatsApp in new tab/app
-            window.open(waUrl, '_blank');
-
-            // Show Toast feedback
-            showToast(`Quotation formatted! Opening WhatsApp for ${name}...`, 'success');
-
-            // Show persistent inline fallback banner below form
-            const banner = document.getElementById('quoteSuccessBanner');
-            const waBtn = document.getElementById('quoteSuccessWaBtn');
-            if (banner && waBtn) {
-                waBtn.href = waUrl;
-                banner.classList.remove('hidden');
-                banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
-        }
-
-        function handleQuoteSubmit(e) {
-            if (e) e.preventDefault();
-            sendQuoteToWhatsApp(false);
-        }
-
-        function sendViaWhatsAppDirect() {
-            sendQuoteToWhatsApp(true);
-        }
-
-        // 9. Ultra-Smooth 60/120FPS 3D Gyroscopic Tilt & Glare Parallax Engine (Push-in 3D Effect)
-        function init3DTilt() {
-            const tiltCards = document.querySelectorAll('[data-tilt-card]');
-            tiltCards.forEach(card => {
-                let rafId = null;
-                const maxTilt = parseFloat(card.getAttribute('data-tilt-max')) || 14;
-                const innerImg = card.querySelector('[data-tilt-inner-img]');
-                const depthLayers = card.querySelectorAll('[data-depth]');
-
-                card.addEventListener('mousemove', (e) => {
-                    // Prevent child tilt card from triggering parent card movement
-                    e.stopPropagation();
-
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-
-                    // Clamped normalized coordinates (-1 to +1)
-                    const xNorm = Math.max(-1, Math.min(1, (x / rect.width - 0.5) * 2));
-                    const yNorm = Math.max(-1, Math.min(1, (y / rect.height - 0.5) * 2));
-
-                    const pctX = ((x / rect.width) * 100).toFixed(1);
-                    const pctY = ((y / rect.height) * 100).toFixed(1);
-
-                    if (rafId) cancelAnimationFrame(rafId);
-                    rafId = requestAnimationFrame(() => {
-                        card.style.setProperty('--mouse-x', `${pctX}%`);
-                        card.style.setProperty('--mouse-y', `${pctY}%`);
-
-                        // 3D Tilt & Push-in Physics:
-                        // Side under cursor pushes into screen (away from user into 3D depth)
-                        const rotX = -yNorm * maxTilt;
-                        const rotY = xNorm * maxTilt;
-
-                        // Dynamic 3D perspective with push-in depth sinking
-                        card.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translate3d(0px, 0px, -8px) scale3d(0.99, 0.99, 0.99)`;
-
-                        // Dynamic realistic shadow opposite to pushed edge
-                        const shadowX = (-xNorm * 18).toFixed(1);
-                        const shadowY = (-yNorm * 18 + 12).toFixed(1);
-                        card.style.boxShadow = `${shadowX}px ${shadowY}px 45px -10px rgba(0, 0, 0, 0.85), 0 0 35px rgba(34, 197, 94, 0.35)`;
-
-                        // Optical Parallax Shift for Inner Image (Window depth illusion)
-                        if (innerImg) {
-                            const imgShiftX = (-xNorm * 12).toFixed(1);
-                            const imgShiftY = (-yNorm * 12).toFixed(1);
-                            innerImg.style.transform = `scale(1.08) translate3d(${imgShiftX}px, ${imgShiftY}px, 0)`;
-                        }
-
-                        // Parallax 3D child badges / labels
-                        depthLayers.forEach(layer => {
-                            if (layer === card) return;
-                            const depth = parseFloat(layer.getAttribute('data-depth')) || 20;
-                            const shiftX = (-xNorm * depth * 0.35).toFixed(1);
-                            const shiftY = (-yNorm * depth * 0.35).toFixed(1);
-                            layer.style.transform = `translate3d(${shiftX}px, ${shiftY}px, 0)`;
-                        });
-                    });
-                });
-
-                let isEntering = false;
-
-                card.addEventListener('mouseenter', () => {
-                    isEntering = true;
-                    // Smooth 150ms initial blend to prevent sudden jump on entry
-                    card.style.transition = 'transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s ease';
-                    if (innerImg) innerImg.style.transition = 'transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)';
-                    depthLayers.forEach(layer => {
-                        layer.style.transition = 'transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)';
-                    });
-
-                    // Remove transition after entry so continuous mousemove is 100% lag-free at 60/120fps
-                    setTimeout(() => {
-                        if (isEntering) {
-                            card.style.transition = 'none';
-                            if (innerImg) innerImg.style.transition = 'none';
-                            depthLayers.forEach(layer => { layer.style.transition = 'none'; });
-                        }
-                    }, 150);
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    isEntering = false;
-                    if (rafId) cancelAnimationFrame(rafId);
-
-                    const springEase = 'transform 0.75s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.75s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.35s ease';
-                    card.style.transition = springEase;
-                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translate3d(0px, 0px, 0px) scale3d(1, 1, 1)';
-                    card.style.boxShadow = '';
-
-                    if (innerImg) {
-                        innerImg.style.transition = 'transform 0.75s cubic-bezier(0.23, 1, 0.32, 1)';
-                        innerImg.style.transform = 'scale(1) translate3d(0px, 0px, 0px)';
-                    }
-
-                    depthLayers.forEach(layer => {
-                        layer.style.transition = 'transform 0.75s cubic-bezier(0.23, 1, 0.32, 1)';
-                        layer.style.transform = 'translate3d(0px, 0px, 0px)';
-                    });
-                });
-            });
-        }
-
-        // 10. Scroll-Triggered Reveal Animation (Intersection Observer)
-        function initScrollReveal() {
-            const revealElements = document.querySelectorAll('.reveal-on-scroll');
-            if (!revealElements.length) return;
-
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver((entries, obs) => {
-                    entries.forEach((entry, idx) => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('is-revealed');
-                            obs.unobserve(entry.target);
-                        }
-                    });
-                }, {
-                    root: null,
-                    threshold: 0.12,
-                    rootMargin: '0px 0px -40px 0px'
-                });
-
-                revealElements.forEach(el => observer.observe(el));
-            } else {
-                // Fallback for older browsers
-                revealElements.forEach(el => el.classList.add('is-revealed'));
-            }
-        }
-
-        // Initialize calculator on page load
-        calculateRecommendation();
-
-        // 11. Luxury Welcome Splash Screen / Intro Handler
-        let splashTimer = null;
-
-        function initWelcomeSplash() {
-            const splash = document.getElementById('welcomeSplash');
-            if (!splash) return;
-
-            const progressBar = document.getElementById('splashProgressBar');
-            const statusText = document.getElementById('splashStatusText');
-
-            if (splashTimer) clearInterval(splashTimer);
-
-            let progress = 0;
-            const duration = 2800; // 2.8 seconds cinematic duration
-            const intervalTime = 30;
-            const step = 100 / (duration / intervalTime);
-
-            if (progressBar) progressBar.style.width = '0%';
-            if (statusText) statusText.innerText = 'INITIALIZING PACKAGING EXPERIENCE...';
-
-            splashTimer = setInterval(() => {
-                progress += step;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(splashTimer);
-                    splashTimer = null;
-                    if (progressBar) progressBar.style.width = '100%';
-                    if (statusText) statusText.innerText = 'WELCOME TO GREEN LIGHT ENTERPRISES';
-
-                    setTimeout(() => {
-                        dismissWelcomeSplash();
-                    }, 450);
-                } else {
-                    if (progressBar) progressBar.style.width = `${progress}%`;
-                    if (statusText) {
-                        if (progress < 25) {
-                            statusText.innerText = 'INITIALIZING PACKAGING EXPERIENCE...';
-                        } else if (progress < 55) {
-                            statusText.innerText = 'LOADING INDUSTRIAL SPECIFICATIONS...';
-                        } else if (progress < 85) {
-                            statusText.innerText = 'PREPARING QUOTATION ENGINE...';
-                        } else {
-                            statusText.innerText = 'READY — ENTERING WEBSITE';
-                        }
-                    }
-                }
-            }, intervalTime);
-
-            // Clicking outside dismisses early
-            splash.onclick = (e) => {
-                if (e.target.closest('button')) return;
-                if (splashTimer) clearInterval(splashTimer);
-                splashTimer = null;
-                dismissWelcomeSplash();
-            };
-        }
-
-        function dismissWelcomeSplash() {
-            const splash = document.getElementById('welcomeSplash');
-            if (!splash || splash.classList.contains('dismissed')) return;
-            if (splashTimer) {
-                clearInterval(splashTimer);
-                splashTimer = null;
-            }
-            splash.classList.add('dismissed');
-
-            splash.style.opacity = '0';
-            splash.style.transform = 'scale(1.06)';
-            splash.style.pointerEvents = 'none';
-
-            setTimeout(() => {
-                splash.style.display = 'none';
-            }, 750);
-        }
-
-        function replayWelcomeSplash() {
-            const splash = document.getElementById('welcomeSplash');
-            if (!splash) return;
-            splash.classList.remove('dismissed');
-            splash.style.display = 'flex';
-            splash.style.opacity = '1';
-            splash.style.transform = 'scale(1)';
-            splash.style.pointerEvents = 'auto';
-            initWelcomeSplash();
-        }
-
-        window.replayWelcomeSplash = replayWelcomeSplash;
-        window.dismissWelcomeSplash = dismissWelcomeSplash;
-
-        // 11. Hero Feature Video Management (Auto-play, Audio Toggle & State)
-        function initHeroVideo() {
-            const video = document.getElementById('hero-pallet-video');
-            const soundBtn = document.getElementById('hero-video-sound-btn');
-            const soundIcon = document.getElementById('hero-sound-icon');
-
-            if (!video) return;
-
-            // Ensure video autoplays smoothly
-            video.muted = true;
-            const tryPlay = () => {
-                const playPromise = video.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(() => {
-                        // User interaction fallback
-                        const playOnInteraction = () => {
-                            video.play().catch(() => {});
-                            window.removeEventListener('click', playOnInteraction);
-                            window.removeEventListener('scroll', playOnInteraction);
-                            window.removeEventListener('touchstart', playOnInteraction);
-                        };
-                        window.addEventListener('click', playOnInteraction, { once: true });
-                        window.addEventListener('scroll', playOnInteraction, { once: true });
-                        window.addEventListener('touchstart', playOnInteraction, { once: true });
-                    });
-                }
-            };
-            tryPlay();
-
-            // Sound Toggle Handler
-            if (soundBtn) {
-                soundBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    if (video.muted) {
-                        video.muted = false;
-                        if (soundIcon) {
-                            soundIcon.classList.remove('fa-volume-xmark');
-                            soundIcon.classList.add('fa-volume-high');
-                        }
-                        soundBtn.classList.add('!bg-emerald-500', '!text-white', 'shadow-emerald-500/40');
-                        soundBtn.setAttribute('title', 'Audio Unmuted - Click to Mute');
-                    } else {
-                        video.muted = true;
-                        if (soundIcon) {
-                            soundIcon.classList.remove('fa-volume-high');
-                            soundIcon.classList.add('fa-volume-xmark');
-                        }
-                        soundBtn.classList.remove('!bg-emerald-500', '!text-white', 'shadow-emerald-500/40');
-                        soundBtn.setAttribute('title', 'Click to Unmute Audio');
-                    }
-                });
-            }
-        }
-
-        // Initialize on DOM ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                initWelcomeSplash();
-                init3DTilt();
-                initScrollReveal();
-                initHeroVideo();
-            });
-        } else {
-            initWelcomeSplash();
-            init3DTilt();
-            initScrollReveal();
-            initHeroVideo();
-        }
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap');
+
+:root {
+    /* Multi-Hue Green Palette Tokens */
+    --green-forest: #0A5C38;
+    --green-pine: #0A5C38;
+    --green-emerald: #10b981;
+    --green-jade: #059669;
+    --green-mint: #34d399;
+    --green-lime: #84cc16;
+    --green-neon: #22c55e;
+    --green-sage: #dcfce7;
+    --green-light-mint: #ecfdf5;
+
+    /* Primary Accent Variables */
+    --primary: #16a34a;
+    --primary-glow: rgba(34, 197, 94, 0.4);
+    --dark-forest: #0A5C38;
+}
+
+.font-cursive {
+    font-family: 'Caveat', cursive, sans-serif;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #f7faf8;
+    color: #0A5C38;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: 'Outfit', sans-serif;
+    color: #0A5C38;
+}
+
+/* Force dark green on any text that was previously black or dark neutral */
+.text-gray-950,
+.text-gray-900,
+.text-gray-800,
+.text-slate-950,
+.text-slate-900,
+.text-slate-800,
+.text-black,
+.text-zinc-950,
+.text-zinc-900,
+.text-zinc-800,
+.text-neutral-950,
+.text-neutral-900,
+.text-neutral-800 {
+    color: #0A5C38 !important;
+}
+
+/* Secondary dark text / body text / paragraph descriptions */
+.text-gray-700,
+.text-gray-600,
+.text-slate-700,
+.text-slate-600,
+.text-zinc-700,
+.text-zinc-600,
+.text-neutral-700,
+.text-neutral-600 {
+    color: #0D6E42 !important;
+}
+
+.text-white {
+    color: #ffffff !important;
+}
+
+/* ==========================================================
+   ULTRA-LUXURY 3D GLASSMORPHISM SYSTEM
+   ========================================================== */
+
+/* 1. Light 3D Glass Card (Frosted with glossy top bevel highlight) */
+.glass-3d-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(240, 253, 244, 0.75) 100%);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 
+        0 10px 30px -5px rgba(6, 78, 59, 0.07),
+        0 2px 6px 0 rgba(0, 0, 0, 0.03),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.95),
+        inset 0 -1px 2px 0 rgba(16, 185, 129, 0.08);
+    border-radius: 1.5rem;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-3d-card:hover {
+    transform: translateY(-8px) scale(1.012);
+    border-color: rgba(52, 211, 153, 0.65);
+    box-shadow: 
+        0 24px 45px -10px rgba(16, 185, 129, 0.22),
+        0 10px 20px -5px rgba(5, 150, 105, 0.12),
+        0 0 25px rgba(52, 211, 153, 0.15),
+        inset 0 1px 2px 0 rgba(255, 255, 255, 1);
+}
+
+/* 2. Glass Card Diagonal Sheen / Light Streak on Hover */
+.glass-3d-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+    transform: skewX(-25deg);
+    transition: 0.8s ease-in-out;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.glass-3d-card:hover::before {
+    left: 200%;
+}
+
+/* 3. Dark 3D Glass Card (For Calculator, Badges, Footer) */
+.glass-3d-dark {
+    background: linear-gradient(145deg, rgba(6, 58, 39, 0.96) 0%, rgba(6, 58, 39, 0.92) 50%, rgba(4, 38, 25, 0.98) 100%);
+    backdrop-filter: blur(20px) saturate(200%);
+    -webkit-backdrop-filter: blur(20px) saturate(200%);
+    border: 1px solid rgba(74, 222, 128, 0.28);
+    box-shadow: 
+        0 20px 45px -10px rgba(0, 0, 0, 0.5),
+        0 0 30px -5px rgba(34, 197, 94, 0.2),
+        inset 0 1px 1.5px 0 rgba(110, 231, 183, 0.4);
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-3d-dark:hover {
+    transform: translateY(-4px);
+    border-color: rgba(74, 222, 128, 0.55);
+    box-shadow: 
+        0 28px 55px -10px rgba(0, 0, 0, 0.6),
+        0 0 40px -5px rgba(34, 197, 94, 0.35),
+        inset 0 1px 2px 0 rgba(110, 231, 183, 0.6);
+}
+
+/* 4. Translucent Glass Pill & Badges */
+.glass-pill {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 15px -2px rgba(16, 185, 129, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.glass-pill-dark {
+    background: rgba(6, 58, 39, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(74, 222, 128, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(110, 231, 183, 0.3);
+}
+
+/* ==========================================================
+   MULTI-HUE GREEN GRADIENTS (Emerald, Mint, Lime, Forest)
+   ========================================================== */
+
+/* Multi-green gradient text */
+.gradient-text-multi {
+    background: linear-gradient(135deg, #059669 0%, #10b981 35%, #22c55e 70%, #84cc16 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-emerald {
+    background: linear-gradient(135deg, #059669 0%, #10b981 50%, #064e3b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-natural,
+.gradient-text-mint {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-lime {
+    background: linear-gradient(135deg, #84cc16 0%, #22c55e 50%, #15803d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-light {
+    background: linear-gradient(135deg, #a7f3d0 0%, #6ee7b7 40%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #10b981 0%, #059669 45%, #064e3b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Multi-Green Badge Variations */
+.badge-emerald {
+    background: linear-gradient(135deg, rgba(209, 250, 229, 0.9) 0%, rgba(167, 243, 208, 0.7) 100%);
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    color: #065f46;
+}
+
+.badge-mint {
+    background: linear-gradient(135deg, rgba(236, 253, 245, 0.95) 0%, rgba(209, 250, 229, 0.8) 100%);
+    border: 1px solid rgba(110, 231, 183, 0.5);
+    color: #047857;
+}
+
+.badge-forest {
+    background: linear-gradient(135deg, rgba(6, 58, 39, 0.92) 0%, rgba(6, 58, 39, 0.85) 100%);
+    border: 1px solid rgba(74, 222, 128, 0.35);
+    color: #a7f3d0;
+}
+
+.badge-lime {
+    background: linear-gradient(135deg, rgba(247, 254, 231, 0.95) 0%, rgba(236, 252, 203, 0.8) 100%);
+    border: 1px solid rgba(163, 230, 53, 0.5);
+    color: #3f6212;
+}
+
+/* ==========================================================
+   3D BUTTONS & INTERACTIVE ELEMENTS
+   ========================================================== */
+
+/* 3D Primary Button with Emerald-Forest Gradient */
+.btn-3d-emerald {
+    background: linear-gradient(135deg, #10b981 0%, #059669 40%, #063A27 100%);
+    color: #ffffff;
+    box-shadow: 
+        0 8px 20px -3px rgba(16, 185, 129, 0.45),
+        0 2px 4px rgba(0, 0, 0, 0.08),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.4);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-3d-emerald:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 
+        0 14px 28px -4px rgba(16, 185, 129, 0.55),
+        0 0 20px rgba(52, 211, 153, 0.3),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.6);
+}
+
+.btn-3d-emerald:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+/* 3D Glass Secondary Button */
+.btn-3d-glass {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 253, 244, 0.8) 100%);
+    border: 1.5px solid rgba(52, 211, 153, 0.45);
+    box-shadow: 
+        0 6px 16px -2px rgba(6, 78, 59, 0.08),
+        inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-3d-glass:hover {
+    transform: translateY(-2px) scale(1.02);
+    border-color: rgba(16, 185, 129, 0.8);
+    background: linear-gradient(135deg, #ffffff 0%, rgba(220, 252, 231, 0.9) 100%);
+    box-shadow: 
+        0 12px 24px -4px rgba(16, 185, 129, 0.2),
+        inset 0 1px 1.5px 0 rgba(255, 255, 255, 1);
+}
+
+.btn-3d-glass:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+/* ==========================================================
+   AMBIENT GLOW SPHERES (Multi-Green Aurora Mesh)
+   ========================================================== */
+.glow-sphere {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(85px);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+}
+
+.glow-emerald {
+    background: radial-gradient(circle, rgba(52, 211, 153, 0.45) 0%, rgba(16, 185, 129, 0.2) 50%, transparent 75%);
+}
+
+.glow-mint {
+    background: radial-gradient(circle, rgba(110, 231, 183, 0.4) 0%, rgba(52, 211, 153, 0.18) 50%, transparent 75%);
+}
+
+.glow-lime {
+    background: radial-gradient(circle, rgba(163, 230, 53, 0.35) 0%, rgba(132, 204, 22, 0.15) 50%, transparent 75%);
+}
+
+.glow-forest {
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(5, 150, 105, 0.12) 50%, transparent 75%);
+}
+
+/* ==========================================================
+   3D TILT EFFECT & MICRO-INTERACTIONS
+   ========================================================== */
+.tilt-card-container {
+    perspective: 1000px;
+}
+
+.tilt-card {
+    transform-style: preserve-3d;
+    will-change: transform, box-shadow;
+}
+
+/* Shimmer Light Sweeping Animation */
+.btn-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-shimmer::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: rotate(30deg);
+    animation: btnShimmer 3.5s infinite;
+}
+
+@keyframes btnShimmer {
+    0% {
+        transform: translateX(-100%) rotate(30deg);
+    }
+    100% {
+        transform: translateX(100%) rotate(30deg);
+    }
+}
+
+/* Custom Styled Scrollbar */
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0fdf4;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+    border-radius: 10px;
+    border: 2px solid #f0fdf4;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #047857;
+}
+
+/* Reveal on Scroll Transitions */
+.reveal-item {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-item.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Green Color Wavy Menu Line Hover Effect */
+.nav-item-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding-top: 0.25rem;
+    padding-bottom: 0.35rem;
+    transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s ease;
+    text-decoration: none;
+}
+
+.nav-item-link:hover {
+    color: #059669 !important;
+    transform: translateY(-1.5px);
+}
+
+.nav-item-link::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 7px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 6'%3E%3Cpath d='M0 3 Q 6 0, 12 3 T 24 3' fill='none' stroke='%2310b981' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-size: 22px 6.5px;
+    background-position: 0 center;
+    opacity: 0;
+    transform: scaleX(0.2) translateY(3px);
+    transform-origin: center;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.45));
+    pointer-events: none;
+}
+
+.nav-item-link:hover::after {
+    opacity: 1;
+    transform: scaleX(1) translateY(0);
+    animation: wavyMenuFlow 0.75s linear infinite;
+}
+
+@keyframes wavyMenuFlow {
+    0% {
+        background-position-x: 0px;
+    }
+    100% {
+        background-position-x: 22px;
+    }
+}
+
+
+/* Luxury Welcome Intro Splash Screen */
+#welcomeSplash {
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#welcomeSplash.dismissed {
+    opacity: 0 !important;
+    transform: scale(1.06) !important;
+    pointer-events: none !important;
+}
+
+@keyframes introLogoEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.65) translateY(24px) rotateY(-20deg);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.05) translateY(-4px) rotateY(0deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0) rotateY(0deg);
+    }
+}
+
+.intro-logo-3d {
+    animation: introLogoEntrance 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes introTextFadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.intro-text-fade {
+    animation: introTextFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+}
+
+/* ==========================================================
+   ADVANCED 3D LOOK & ANIMATION EXTENSIONS
+   ========================================================== */
+
+/* 1. Flagship Card 3D Treatment (Stretch Film ⭐) */
+.flagship-card-3d {
+    position: relative;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(240, 253, 244, 0.9) 100%);
+    border: 2px solid rgba(16, 185, 129, 0.45);
+    box-shadow: 
+        0 20px 50px -10px rgba(16, 185, 129, 0.2),
+        0 0 30px rgba(52, 211, 153, 0.15),
+        inset 0 1px 2px rgba(255, 255, 255, 1);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flagship-card-3d:hover {
+    transform: translateY(-8px) scale(1.008);
+    border-color: rgba(16, 185, 129, 0.85);
+    box-shadow: 
+        0 32px 70px -12px rgba(16, 185, 129, 0.32),
+        0 0 45px rgba(52, 211, 153, 0.28),
+        inset 0 1px 3px rgba(255, 255, 255, 1);
+}
+
+/* 2. Interactive 3D Card (Parallax Tilt Effect on Mouse Move) */
+.card-3d-interactive {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out, box-shadow 0.35s ease, border-color 0.35s ease;
+    will-change: transform;
+}
+
+.card-3d-interactive:hover {
+    box-shadow: 
+        0 24px 50px -10px rgba(6, 78, 59, 0.18),
+        0 0 25px rgba(52, 211, 153, 0.15);
+}
+
+/* 3. Scroll Reveal Animation System */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 4. Floating 3D Micro-Badges */
+.floating-3d-badge {
+    animation: floatingBadge 5s ease-in-out infinite;
+}
+
+@keyframes floatingBadge {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(1.5deg);
+    }
+}
+
+.floating-3d-badge-reverse {
+    animation: floatingBadgeReverse 6s ease-in-out infinite;
+}
+
+@keyframes floatingBadgeReverse {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(8px) rotate(-1.5deg);
+    }
+}
+
+/* 5. Glowing Pulsating Border */
+.glow-border-pulse {
+    animation: borderGlowPulse 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes borderGlowPulse {
+    0% {
+        border-color: rgba(16, 185, 129, 0.35);
+        box-shadow: 0 12px 35px -5px rgba(16, 185, 129, 0.15);
+    }
+    100% {
+        border-color: rgba(52, 211, 153, 0.8);
+        box-shadow: 0 22px 55px -5px rgba(16, 185, 129, 0.35), 0 0 30px rgba(52, 211, 153, 0.2);
+    }
+}
+
+/* 6. Tactile 3D Parameter Pill Chip */
+.spec-chip-3d {
+    background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    box-shadow: 0 3px 10px rgba(6, 78, 59, 0.06), inset 0 1px 0 #ffffff;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.spec-chip-3d:hover {
+    transform: translateY(-2px) scale(1.03);
+    border-color: rgba(16, 185, 129, 0.6);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.15), inset 0 1px 0 #ffffff;
+}
+
+/* 7. World-Class 3D Emerald and Glass Interactive Buttons */
+.btn-3d-emerald {
+    background: linear-gradient(135deg, #059669 0%, #047857 50%, #064e3b 100%);
+    color: #ffffff !important;
+    border: 1px solid rgba(110, 231, 183, 0.45);
+    box-shadow: 
+        0 10px 25px -5px rgba(5, 150, 105, 0.45),
+        0 4px 8px -2px rgba(4, 120, 87, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.4),
+        inset 0 -2px 4px rgba(2, 44, 34, 0.4);
+    transform: translateY(0);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-3d-emerald:hover {
+    transform: translateY(-3px) scale(1.02);
+    background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+    border-color: rgba(167, 243, 208, 0.85);
+    box-shadow: 
+        0 18px 38px -5px rgba(16, 185, 129, 0.55),
+        0 8px 14px -2px rgba(5, 150, 105, 0.4),
+        0 0 25px rgba(52, 211, 153, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+.btn-3d-emerald:active {
+    transform: translateY(1px) scale(0.98);
+    box-shadow: 
+        0 5px 12px -2px rgba(5, 150, 105, 0.4),
+        inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.btn-3d-glass {
+    background: rgba(6, 40, 22, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    color: #6ee7b7 !important;
+    box-shadow: 
+        0 8px 20px -5px rgba(0, 0, 0, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-3d-glass:hover {
+    transform: translateY(-3px) scale(1.02);
+    background: rgba(16, 185, 129, 0.2);
+    border-color: rgba(110, 231, 183, 0.75);
+    color: #ffffff !important;
+    box-shadow: 
+        0 14px 28px -5px rgba(16, 185, 129, 0.35),
+        0 0 22px rgba(52, 211, 153, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.btn-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: skewX(-25deg);
+    animation: btnShimmerSweep 3.5s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes btnShimmerSweep {
+    0% { left: -120%; }
+    30%, 100% { left: 180%; }
+}
+
+/* ==========================================================
+   WORLD-CLASS 3D HOLOGRAPHIC & SPECULAR TILT SYSTEM
+   ========================================================== */
+
+/* 1. Master 3D Perspective Stage */
+.stage-3d-wrap {
+    perspective: 1200px;
+    transform-style: preserve-3d;
+}
+
+/* 2. Holographic 3D Card with Dynamic Interactive Specular Lighting */
+.card-3d-hologram {
+    position: relative;
+    background: linear-gradient(135deg, rgba(2, 22, 13, 0.96) 0%, rgba(5, 38, 22, 0.94) 50%, rgba(2, 18, 10, 0.98) 100%);
+    border: 1.5px solid rgba(52, 211, 153, 0.35);
+    border-radius: 2rem;
+    box-shadow: 
+        0 25px 65px -15px rgba(0, 0, 0, 0.8),
+        0 0 45px -10px rgba(16, 185, 129, 0.3),
+        inset 0 1px 2px rgba(110, 231, 183, 0.5),
+        inset 0 -1px 2px rgba(5, 150, 105, 0.3);
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.card-3d-hologram:hover {
+    border-color: rgba(74, 222, 128, 0.85);
+    box-shadow: 
+        0 35px 85px -15px rgba(0, 0, 0, 0.9),
+        0 0 65px -5px rgba(34, 197, 94, 0.5),
+        0 0 30px rgba(52, 211, 153, 0.35),
+        inset 0 1.5px 3px rgba(167, 243, 208, 0.75);
+}
+
+/* Tilt Card (Right Hero Card) - Matching Holo-Image-Frame Hover */
+.tilt-card {
+    position: relative;
+    border-radius: 2.2rem;
+    box-shadow: 
+        0 20px 40px -10px rgba(0, 0, 0, 0.7),
+        0 0 30px rgba(16, 185, 129, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    border: 2px solid rgba(74, 222, 128, 0.4);
+    transform-style: preserve-3d;
+    will-change: transform, box-shadow;
+    cursor: pointer;
+}
+
+.tilt-card:hover {
+    border-color: rgba(110, 231, 183, 0.95);
+    box-shadow: 
+        0 28px 60px -10px rgba(0, 0, 0, 0.85),
+        0 0 50px rgba(34, 197, 94, 0.55),
+        inset 0 2px 4px rgba(255, 255, 255, 0.7);
+}
+
+/* 3. Specular Glare / Flash Overlay following cursor */
+.specular-glare {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: radial-gradient(circle 480px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.28), rgba(52, 211, 153, 0.16) 32%, transparent 68%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    mix-blend-mode: overlay;
+    z-index: 25;
+}
+
+[data-tilt-card]:hover .specular-glare,
+.card-3d-hologram:hover .specular-glare,
+.holo-image-frame:hover .specular-glare,
+.tilt-card:hover .specular-glare {
+    opacity: 1;
+}
+
+/* 4. Multi-Layer 3D Depth Layers (Parallax Pop-Out) */
+.layer-3d-deep {
+    transform-style: preserve-3d;
+}
+
+.layer-3d-mid {
+    transform-style: preserve-3d;
+}
+
+.layer-3d-high {
+    transform-style: preserve-3d;
+}
+
+.layer-3d-super {
+    transform-style: preserve-3d;
+}
+
+/* 5. 3D Floating Holographic Image Frame */
+.holo-image-frame {
+    position: relative;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 
+        0 20px 40px -10px rgba(0, 0, 0, 0.7),
+        0 0 30px rgba(16, 185, 129, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    border: 2px solid rgba(74, 222, 128, 0.4);
+    transform-style: preserve-3d;
+    will-change: transform, box-shadow;
+    cursor: pointer;
+}
+
+.holo-image-frame:hover {
+    border-color: rgba(110, 231, 183, 0.95);
+    box-shadow: 
+        0 28px 60px -10px rgba(0, 0, 0, 0.85),
+        0 0 50px rgba(34, 197, 94, 0.55),
+        inset 0 2px 4px rgba(255, 255, 255, 0.7);
+}
+
+/* 6. Shimmering Edge Scan Line */
+.card-3d-hologram::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(52, 211, 153, 0.15) 60deg, transparent 120deg);
+    animation: rotateHoloBorder 8s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.7;
+}
+
+@keyframes rotateHoloBorder {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 7. Clean White Luxury Hero Theme & Text Overrides */
+.hero-clean-white,
+.hero-dark-luxury {
+    background: radial-gradient(ellipse 90% 50% at 50% -10%, rgba(209, 250, 229, 0.45) 0%, transparent 65%),
+                radial-gradient(circle at 10% 25%, rgba(220, 252, 231, 0.4) 0%, transparent 45%),
+                radial-gradient(circle at 90% 65%, rgba(236, 253, 245, 0.6) 0%, transparent 50%),
+                linear-gradient(180deg, #ffffff 0%, #f9fdfa 55%, #f0fdf4 100%) !important;
+    color: #0A5C38 !important;
+}
+
+.hero-clean-white h1,
+.hero-clean-white .hero-title-light,
+.hero-dark-luxury h1,
+.hero-dark-luxury .hero-title-light {
+    color: #0A5C38 !important;
+}
+
+.hero-clean-white p.hero-lead-text,
+.hero-dark-luxury p.hero-lead-text {
+    color: #16a34a !important;
+}
+
+.hero-clean-white p.hero-sub-text,
+.hero-dark-luxury p.hero-sub-text {
+    color: #0D6E42 !important;
+    opacity: 0.95;
+}
+
+.hero-clean-white .hero-tagline-dark,
+.hero-dark-luxury .hero-tagline-dark {
+    background: #ecfdf5 !important;
+    border-color: rgba(52, 211, 153, 0.5) !important;
+    color: #065f46 !important;
+    box-shadow: 0 2px 10px rgba(16, 185, 129, 0.08) !important;
+}
+
+.hero-clean-white .hero-trust-tag,
+.hero-dark-luxury .hero-trust-tag {
+    color: #065f46 !important;
+}
+
+/* Ensure dark luxury cards inside hero maintain their crisp contrast */
+.card-3d-hologram h2 {
+    color: #ffffff !important;
+}
+.card-3d-hologram p {
+    color: #ecfdf5 !important;
+}
+.tilt-card p,
+.tilt-card h4 {
+    color: inherit;
+}
+
+/* ==========================================================
+   LUXURY QUOTE CARD & SECTION (Dark Green, Light Green, White)
+   ========================================================== */
+
+/* 1. Master Quote Card Container */
+.quote-luxury-card {
+    background: linear-gradient(150deg, #063A27 0%, #063A27 50%, #04261a 100%) !important;
+    border: 2px solid rgba(52, 211, 153, 0.45);
+    border-radius: 2.5rem;
+    box-shadow: 
+        0 30px 80px -15px rgba(2, 20, 10, 0.75),
+        0 0 50px -10px rgba(16, 185, 129, 0.25),
+        inset 0 1px 2px rgba(167, 243, 208, 0.4),
+        inset 0 -2px 4px rgba(2, 30, 15, 0.6);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.quote-luxury-card:hover {
+    border-color: rgba(74, 222, 128, 0.8);
+    box-shadow: 
+        0 40px 95px -15px rgba(2, 20, 10, 0.85),
+        0 0 65px -5px rgba(34, 197, 94, 0.4),
+        inset 0 1.5px 3px rgba(167, 243, 208, 0.6);
+    transform: translateY(-4px);
+}
+
+/* 2. Shimmer sweep on quote card perimeter */
+.quote-luxury-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 50% 20%, rgba(52, 211, 153, 0.12), transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 3. High-Contrast Pure White Input Boxes */
+.quote-input-white {
+    background-color: #ffffff !important;
+    color: #0A5C38 !important;
+    border: 2px solid #a7f3d0 !important;
+    border-radius: 1rem;
+    font-weight: 700;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.quote-input-white::placeholder {
+    color: rgba(5, 46, 22, 0.42) !important;
+    font-weight: 500;
+}
+
+.quote-input-white:hover {
+    border-color: #34d399 !important;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.18);
+}
+
+.quote-input-white:focus {
+    outline: none !important;
+    border-color: #10b981 !important;
+    box-shadow: 
+        0 0 0 4px rgba(52, 211, 153, 0.3),
+        0 6px 20px rgba(16, 185, 129, 0.25) !important;
+    transform: translateY(-1px);
+}
+
+/* 4. Luxury Quote Label with Light Green & Mint Pill */
+.quote-label-light {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #a7f3d0 !important;
+    margin-bottom: 0.5rem;
+}
+
+.quote-label-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 0.5rem;
+    background: rgba(52, 211, 153, 0.18);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    color: #34d399;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+/* 5. Parameter Step Chip (Dark Green, Light Green, White) */
+.quote-step-chip {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 244, 0.9) 100%);
+    border: 1.5px solid rgba(52, 211, 153, 0.4);
+    box-shadow: 0 6px 18px -3px rgba(6, 78, 59, 0.08), inset 0 1px 1px #ffffff;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.quote-step-chip:hover {
+    transform: translateY(-2px);
+    border-color: rgba(16, 185, 129, 0.7);
+    box-shadow: 0 10px 25px -4px rgba(16, 185, 129, 0.2), inset 0 1px 2px #ffffff;
+}
+
+/* 6. Trust Value Prop Pills inside Quote Card */
+.quote-trust-pill {
+    background: rgba(6, 58, 39, 0.85);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-radius: 1rem;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #d1fae5;
+    transition: all 0.25s ease;
+}
+
+.quote-trust-pill:hover {
+    background: rgba(6, 58, 39, 0.95);
+    border-color: rgba(52, 211, 153, 0.6);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================
+   INDUSTRY CARDS - COMPACT IMAGE & LUXURY HOVER SYSTEM
+   ========================================================== */
+.ind-card-img-wrap {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    margin-bottom: 0.875rem;
+    background-color: rgba(6, 78, 59, 0.04);
+    box-shadow: 
+        0 4px 14px -3px rgba(6, 78, 59, 0.08),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Subtle frame elevation and emerald border glow on card hover */
+.glass-3d-card:hover .ind-card-img-wrap {
+    box-shadow: 
+        0 14px 28px -6px rgba(16, 185, 129, 0.22),
+        0 4px 12px -2px rgba(6, 78, 59, 0.08),
+        inset 0 0 0 1.5px rgba(52, 211, 153, 0.55);
+    transform: translateY(-2px);
+}
+
+/* Ultra-Smooth Photo Zoom & Color Pop */
+.ind-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1);
+    transition: transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
+}
+
+.glass-3d-card:hover .ind-card-img {
+    transform: scale(1.09);
+    filter: brightness(1.04) contrast(1.03) saturate(1.06);
+}
+
+/* Diagonal Glossy Shimmer Streak across the photo on hover */
+.ind-card-img-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -140%;
+    width: 65%;
+    height: 100%;
+    background: linear-gradient(
+        105deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 25%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0.08) 75%,
+        transparent 100%
+    );
+    transform: skewX(-20deg);
+    transition: left 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+    pointer-events: none;
+    z-index: 3;
+}
+
+.glass-3d-card:hover .ind-card-img-wrap::after {
+    left: 180%;
+}
+
+/* Dynamic Badge Styling & Micro-interaction */
+.ind-card-badge {
+    position: absolute;
+    top: 0.55rem;
+    left: 0.55rem;
+    padding: 0.22rem 0.6rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 0.58rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #0A5C38;
+    border: 1px solid rgba(167, 243, 208, 0.75);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    z-index: 4;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-3d-card:hover .ind-card-badge {
+    background: #047857 !important;
+    color: #ffffff !important;
+    border-color: #10b981 !important;
+    box-shadow: 0 4px 14px rgba(4, 120, 87, 0.4);
+    transform: translateY(-1px) scale(1.02);
+}
+
+.ind-card-badge i {
+    color: #059669;
+    font-size: 0.65rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.glass-3d-card:hover .ind-card-badge i {
+    color: #a7f3d0 !important;
+    transform: scale(1.15);
+}
+
+/* Quick Floating Action Icon on Top-Right of Photo */
+.ind-card-action {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    width: 1.85rem;
+    height: 1.85rem;
+    border-radius: 9999px;
+    background: rgba(6, 58, 39, 0.9);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(52, 211, 153, 0.45);
+    color: #a7f3d0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    opacity: 0;
+    transform: scale(0.7) translate(4px, -4px);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+}
+
+.glass-3d-card:hover .ind-card-action {
+    opacity: 1;
+    transform: scale(1) translate(0, 0);
+}
+
+/* Soft Bottom Gradient Overlay */
+.ind-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(6, 58, 39, 0.45) 0%, rgba(6, 58, 39, 0.08) 50%, transparent 100%);
+    opacity: 0.65;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.glass-3d-card:hover .ind-card-overlay {
+    opacity: 0.2;
+}
+
+/* ==========================================================
+   PRODUCT CARDS - ENLARGED IMAGE & LUXURY HOVER SYSTEM
+   ========================================================== */
+.prod-card-img-wrap {
+    position: relative;
+    border-radius: 1.125rem;
+    overflow: hidden;
+    height: 13.5rem; /* 216px - exact same visual height as the industry cards */
+    margin-bottom: 1rem;
+    background-color: rgba(6, 78, 59, 0.04);
+    box-shadow: 
+        0 4px 14px -3px rgba(6, 78, 59, 0.08),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Frame elevation and emerald border glow on card hover */
+.glass-3d-card:hover .prod-card-img-wrap {
+    box-shadow: 
+        0 14px 28px -6px rgba(16, 185, 129, 0.22),
+        0 4px 12px -2px rgba(6, 78, 59, 0.08),
+        inset 0 0 0 1.5px rgba(52, 211, 153, 0.55);
+    transform: translateY(-2px);
+}
+
+.prod-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1);
+    transition: transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
+}
+
+.glass-3d-card:hover .prod-card-img {
+    transform: scale(1.09);
+    filter: brightness(1.04) contrast(1.03) saturate(1.06);
+}
+
+/* Diagonal Glossy Shimmer Streak on card hover */
+.prod-card-img-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -140%;
+    width: 65%;
+    height: 100%;
+    background: linear-gradient(
+        105deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 25%,
+        rgba(255, 255, 255, 0.45) 50%,
+        rgba(255, 255, 255, 0.08) 75%,
+        transparent 100%
+    );
+    transform: skewX(-20deg);
+    transition: left 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+    pointer-events: none;
+    z-index: 3;
+}
+
+.glass-3d-card:hover .prod-card-img-wrap::after {
+    left: 180%;
+}
 
