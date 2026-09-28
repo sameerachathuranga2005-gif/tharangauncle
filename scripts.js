@@ -648,19 +648,98 @@ ${notes}
             sendQuoteToWhatsApp(true);
         }
 
-        // 9. Ultra-Smooth 60/120FPS 3D Gyroscopic Tilt & Glare Parallax Engine (Push-in 3D Effect)
+        // 9. Ultra-Smooth 60/120FPS 3D Magnetic Tilt & Glare Engine (Leans towards cursor)
         function init3DTilt() {
             const tiltCards = document.querySelectorAll('[data-tilt-card]');
             tiltCards.forEach(card => {
-                let rafId = null;
-                const maxTilt = parseFloat(card.getAttribute('data-tilt-max')) || 14;
+                const maxTilt = parseFloat(card.getAttribute('data-tilt-max')) || 16;
                 const innerImg = card.querySelector('[data-tilt-inner-img]');
                 const depthLayers = card.querySelectorAll('[data-depth]');
 
-                card.addEventListener('mousemove', (e) => {
-                    // Prevent child tilt card from triggering parent card movement
-                    e.stopPropagation();
+                let targetRotX = 0;
+                let targetRotY = 0;
+                let targetTransX = 0;
+                let targetTransY = 0;
+                let targetScale = 1;
 
+                let currentRotX = 0;
+                let currentRotY = 0;
+                let currentTransX = 0;
+                let currentTransY = 0;
+                let currentScale = 1;
+
+                let isHovered = false;
+                let animFrameId = null;
+
+                function updateCardPhysics() {
+                    // Smooth physics interpolation (0.12 provides responsive, silky-smooth magnetic feel)
+                    const ease = isHovered ? 0.12 : 0.08;
+
+                    currentRotX += (targetRotX - currentRotX) * ease;
+                    currentRotY += (targetRotY - currentRotY) * ease;
+                    currentTransX += (targetTransX - currentTransX) * ease;
+                    currentTransY += (targetTransY - currentTransY) * ease;
+                    currentScale += (targetScale - currentScale) * ease;
+
+                    // Apply 3D perspective: Card leans & magnetically tilts towards the mouse cursor
+                    const liftZ = isHovered ? 12 : 0;
+                    card.style.transform = `perspective(1000px) rotateX(${currentRotX.toFixed(2)}deg) rotateY(${currentRotY.toFixed(2)}deg) translate3d(${currentTransX.toFixed(2)}px, ${currentTransY.toFixed(2)}px, ${liftZ}px) scale3d(${currentScale.toFixed(3)}, ${currentScale.toFixed(3)}, ${currentScale.toFixed(3)})`;
+
+                    // Dynamic shadow dropping realistically opposite to tilt
+                    if (isHovered) {
+                        const shadowX = (-currentTransX * 2.2).toFixed(1);
+                        const shadowY = (-currentTransY * 2.2 + 22).toFixed(1);
+                        card.style.boxShadow = `${shadowX}px ${shadowY}px 50px -10px rgba(0, 0, 0, 0.8), 0 0 30px rgba(6, 78, 59, 0.45)`;
+                    } else {
+                        card.style.boxShadow = '';
+                    }
+
+                    // Parallax on inner video / image (creates 3D viewport depth)
+                    if (innerImg) {
+                        const imgShiftX = (-currentTransX * 0.7).toFixed(1);
+                        const imgShiftY = (-currentTransY * 0.7).toFixed(1);
+                        const imgScale = isHovered ? 1.05 : 1;
+                        innerImg.style.transform = `scale(${imgScale}) translate3d(${imgShiftX}px, ${imgShiftY}px, 0)`;
+                    }
+
+                    // Parallax on floating detail badges (pop out towards user in 3D)
+                    depthLayers.forEach(layer => {
+                        if (layer === card) return;
+                        const depth = parseFloat(layer.getAttribute('data-depth')) || 20;
+                        const shiftX = (currentTransX * (depth / 16)).toFixed(1);
+                        const shiftY = (currentTransY * (depth / 16)).toFixed(1);
+                        layer.style.transform = `translate3d(${shiftX}px, ${shiftY}px, ${isHovered ? depth : 0}px)`;
+                    });
+
+                    // Continue animation loop if still moving or still hovered
+                    const isMoving = 
+                        Math.abs(targetRotX - currentRotX) > 0.02 ||
+                        Math.abs(targetRotY - currentRotY) > 0.02 ||
+                        Math.abs(targetTransX - currentTransX) > 0.05 ||
+                        Math.abs(targetTransY - currentTransY) > 0.05 ||
+                        Math.abs(targetScale - currentScale) > 0.002;
+
+                    if (isHovered || isMoving) {
+                        animFrameId = requestAnimationFrame(updateCardPhysics);
+                    } else {
+                        animFrameId = null;
+                        card.style.transform = '';
+                        card.style.boxShadow = '';
+                        if (innerImg) innerImg.style.transform = '';
+                        depthLayers.forEach(layer => { if (layer !== card) layer.style.transform = ''; });
+                    }
+                }
+
+                function startPhysicsLoop() {
+                    if (!animFrameId) {
+                        animFrameId = requestAnimationFrame(updateCardPhysics);
+                    }
+                }
+
+                // Listen on hoverArea (closest 3D stage or the card itself)
+                const hoverArea = card.closest('.stage-3d-wrap') || card;
+
+                hoverArea.addEventListener('mousemove', (e) => {
                     const rect = card.getBoundingClientRect();
                     const x = e.clientX - rect.left;
                     const y = e.clientY - rect.top;
@@ -669,84 +748,38 @@ ${notes}
                     const xNorm = Math.max(-1, Math.min(1, (x / rect.width - 0.5) * 2));
                     const yNorm = Math.max(-1, Math.min(1, (y / rect.height - 0.5) * 2));
 
-                    const pctX = ((x / rect.width) * 100).toFixed(1);
-                    const pctY = ((y / rect.height) * 100).toFixed(1);
+                    const pctX = ((Math.max(0, Math.min(rect.width, x)) / rect.width) * 100).toFixed(1);
+                    const pctY = ((Math.max(0, Math.min(rect.height, y)) / rect.height) * 100).toFixed(1);
 
-                    if (rafId) cancelAnimationFrame(rafId);
-                    rafId = requestAnimationFrame(() => {
-                        card.style.setProperty('--mouse-x', `${pctX}%`);
-                        card.style.setProperty('--mouse-y', `${pctY}%`);
+                    card.style.setProperty('--mouse-x', `${pctX}%`);
+                    card.style.setProperty('--mouse-y', `${pctY}%`);
 
-                        // 3D Tilt & Push-in Physics:
-                        // Side under cursor pushes into screen (away from user into 3D depth)
-                        const rotX = -yNorm * maxTilt;
-                        const rotY = xNorm * maxTilt;
+                    // 3D Tilt Physics: card tilts/leans TOWARDS the mouse cursor
+                    targetRotX = yNorm * maxTilt;
+                    targetRotY = -xNorm * maxTilt;
 
-                        // Dynamic 3D perspective with push-in depth sinking
-                        card.style.transform = `perspective(1000px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translate3d(0px, 0px, -8px) scale3d(0.99, 0.99, 0.99)`;
+                    // Magnetic pull/lean towards the cursor
+                    targetTransX = xNorm * 12;
+                    targetTransY = yNorm * 12;
+                    targetScale = 1.025;
 
-                        // Dynamic realistic shadow opposite to pushed edge
-                        const shadowX = (-xNorm * 18).toFixed(1);
-                        const shadowY = (-yNorm * 18 + 12).toFixed(1);
-                        card.style.boxShadow = `${shadowX}px ${shadowY}px 45px -10px rgba(0, 0, 0, 0.85), 0 0 35px rgba(34, 197, 94, 0.35)`;
-
-                        // Optical Parallax Shift for Inner Image (Window depth illusion)
-                        if (innerImg) {
-                            const imgShiftX = (-xNorm * 12).toFixed(1);
-                            const imgShiftY = (-yNorm * 12).toFixed(1);
-                            innerImg.style.transform = `scale(1.08) translate3d(${imgShiftX}px, ${imgShiftY}px, 0)`;
-                        }
-
-                        // Parallax 3D child badges / labels
-                        depthLayers.forEach(layer => {
-                            if (layer === card) return;
-                            const depth = parseFloat(layer.getAttribute('data-depth')) || 20;
-                            const shiftX = (-xNorm * depth * 0.35).toFixed(1);
-                            const shiftY = (-yNorm * depth * 0.35).toFixed(1);
-                            layer.style.transform = `translate3d(${shiftX}px, ${shiftY}px, 0)`;
-                        });
-                    });
+                    isHovered = true;
+                    startPhysicsLoop();
                 });
 
-                let isEntering = false;
-
-                card.addEventListener('mouseenter', () => {
-                    isEntering = true;
-                    // Smooth 150ms initial blend to prevent sudden jump on entry
-                    card.style.transition = 'transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s ease';
-                    if (innerImg) innerImg.style.transition = 'transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)';
-                    depthLayers.forEach(layer => {
-                        layer.style.transition = 'transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)';
-                    });
-
-                    // Remove transition after entry so continuous mousemove is 100% lag-free at 60/120fps
-                    setTimeout(() => {
-                        if (isEntering) {
-                            card.style.transition = 'none';
-                            if (innerImg) innerImg.style.transition = 'none';
-                            depthLayers.forEach(layer => { layer.style.transition = 'none'; });
-                        }
-                    }, 150);
+                hoverArea.addEventListener('mouseenter', () => {
+                    isHovered = true;
+                    startPhysicsLoop();
                 });
 
-                card.addEventListener('mouseleave', () => {
-                    isEntering = false;
-                    if (rafId) cancelAnimationFrame(rafId);
-
-                    const springEase = 'transform 0.75s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.75s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.35s ease';
-                    card.style.transition = springEase;
-                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translate3d(0px, 0px, 0px) scale3d(1, 1, 1)';
-                    card.style.boxShadow = '';
-
-                    if (innerImg) {
-                        innerImg.style.transition = 'transform 0.75s cubic-bezier(0.23, 1, 0.32, 1)';
-                        innerImg.style.transform = 'scale(1) translate3d(0px, 0px, 0px)';
-                    }
-
-                    depthLayers.forEach(layer => {
-                        layer.style.transition = 'transform 0.75s cubic-bezier(0.23, 1, 0.32, 1)';
-                        layer.style.transform = 'translate3d(0px, 0px, 0px)';
-                    });
+                hoverArea.addEventListener('mouseleave', () => {
+                    isHovered = false;
+                    targetRotX = 0;
+                    targetRotY = 0;
+                    targetTransX = 0;
+                    targetTransY = 0;
+                    targetScale = 1;
+                    startPhysicsLoop();
                 });
             });
         }
