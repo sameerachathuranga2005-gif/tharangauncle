@@ -428,6 +428,21 @@
             }
         };
         productSpecs['strapping-accessories'] = productSpecs['strapping-clips'];
+        productSpecs['masking-tape'] = {
+            title: 'Masking, Color & Craft Paper Tapes',
+            image: './assets/all-packaging-tapes.jpg',
+            subtitle: 'Industrial Masking, Vibrant Color & Craft Paper Adhesive Tapes',
+            description: 'Premium collection of high-tack adhesive tapes including crepe paper masking tapes, vibrant color-coding tapes, eco-friendly craft paper tapes, and heavy-duty OPP carton sealing tapes.',
+            category: 'Adhesive Tapes',
+            specs: [
+                ['Tape Types Included', 'Masking Tapes, Color Tapes, Craft Paper Tape, OPP Sealing Tape'],
+                ['Widths Available', '24mm (1 Inch), 36mm (1.5 Inch), 48mm (2 Inch), 72mm (3 Inch)'],
+                ['Colors Available', 'Natural Beige, Red, Blue, Green, Yellow, Brown Craft, Transparent Clear'],
+                ['Adhesive Profile', 'Residue-free clean peel masking, instant tack, high tensile strength'],
+                ['Applications', 'Painting, bundling, craft packaging, color identification, warehouse carton sealing'],
+                ['Availability', 'Available from GLE (Wholesale & Retail Rolls)']
+            ]
+        };
 
         function openProductModal(key) {
             const data = productSpecs[key];
