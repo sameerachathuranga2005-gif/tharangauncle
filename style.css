@@ -2,8 +2,8 @@
 
 :root {
     /* Multi-Hue Green Palette Tokens */
-    --green-forest: #063A27;
-    --green-pine: #063A27;
+    --green-forest: #0A5C38;
+    --green-pine: #0A5C38;
     --green-emerald: #10b981;
     --green-jade: #059669;
     --green-mint: #34d399;
@@ -15,7 +15,7 @@
     /* Primary Accent Variables */
     --primary: #16a34a;
     --primary-glow: rgba(34, 197, 94, 0.4);
-    --dark-forest: #063A27;
+    --dark-forest: #0A5C38;
 }
 
 .font-cursive {
@@ -25,14 +25,14 @@
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
     background-color: #f7faf8;
-    color: #063A27;
+    color: #0A5C38;
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
     font-family: 'Outfit', sans-serif;
-    color: #063A27;
+    color: #0A5C38;
 }
 
 /* Force dark green on any text that was previously black or dark neutral */
@@ -49,7 +49,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 .text-neutral-950,
 .text-neutral-900,
 .text-neutral-800 {
-    color: #063A27 !important;
+    color: #0A5C38 !important;
 }
 
 /* Secondary dark text / body text / paragraph descriptions */
@@ -61,7 +61,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 .text-zinc-600,
 .text-neutral-700,
 .text-neutral-600 {
-    color: #063A27 !important;
+    color: #0D6E42 !important;
 }
 
 .text-white {
@@ -809,24 +809,24 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                 radial-gradient(circle at 10% 25%, rgba(220, 252, 231, 0.4) 0%, transparent 45%),
                 radial-gradient(circle at 90% 65%, rgba(236, 253, 245, 0.6) 0%, transparent 50%),
                 linear-gradient(180deg, #ffffff 0%, #f9fdfa 55%, #f0fdf4 100%) !important;
-    color: #063A27 !important;
+    color: #0A5C38 !important;
 }
 
 .hero-clean-white h1,
 .hero-clean-white .hero-title-light,
 .hero-dark-luxury h1,
 .hero-dark-luxury .hero-title-light {
-    color: #063A27 !important;
+    color: #0A5C38 !important;
 }
 
 .hero-clean-white p.hero-lead-text,
 .hero-dark-luxury p.hero-lead-text {
-    color: #063A27 !important;
+    color: #0A5C38 !important;
 }
 
 .hero-clean-white p.hero-sub-text,
 .hero-dark-luxury p.hero-sub-text {
-    color: #063A27 !important;
+    color: #0D6E42 !important;
     opacity: 0.95;
 }
 
@@ -899,7 +899,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 /* 3. High-Contrast Pure White Input Boxes */
 .quote-input-white {
     background-color: #ffffff !important;
-    color: #063A27 !important;
+    color: #0A5C38 !important;
     border: 2px solid #a7f3d0 !important;
     border-radius: 1rem;
     font-weight: 700;
@@ -1066,7 +1066,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #063A27;
+    color: #0A5C38;
     border: 1px solid rgba(167, 243, 208, 0.75);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
     display: inline-flex;
