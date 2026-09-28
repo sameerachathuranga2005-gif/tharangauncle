@@ -2,8 +2,8 @@
 
 :root {
     /* Multi-Hue Green Palette Tokens */
-    --green-forest: #062414;
-    --green-pine: #0b3d22;
+    --green-forest: #063A27;
+    --green-pine: #063A27;
     --green-emerald: #10b981;
     --green-jade: #059669;
     --green-mint: #34d399;
@@ -15,7 +15,7 @@
     /* Primary Accent Variables */
     --primary: #16a34a;
     --primary-glow: rgba(34, 197, 94, 0.4);
-    --dark-forest: #061a0e;
+    --dark-forest: #063A27;
 }
 
 .font-cursive {
@@ -25,27 +25,43 @@
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
     background-color: #f7faf8;
-    color: #052e16;
+    color: #063A27;
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
     font-family: 'Outfit', sans-serif;
-    color: #052e16;
+    color: #063A27;
 }
 
 /* Force dark green on any text that was previously black or dark neutral */
+.text-gray-950,
 .text-gray-900,
 .text-gray-800,
-.text-gray-700,
+.text-slate-950,
 .text-slate-900,
 .text-slate-800,
-.text-slate-700,
 .text-black,
+.text-zinc-950,
 .text-zinc-900,
-.text-neutral-900 {
-    color: #052e16 !important;
+.text-zinc-800,
+.text-neutral-950,
+.text-neutral-900,
+.text-neutral-800 {
+    color: #063A27 !important;
+}
+
+/* Secondary dark text / body text / paragraph descriptions */
+.text-gray-700,
+.text-gray-600,
+.text-slate-700,
+.text-slate-600,
+.text-zinc-700,
+.text-zinc-600,
+.text-neutral-700,
+.text-neutral-600 {
+    color: #063A27 !important;
 }
 
 .text-white {
@@ -104,7 +120,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 /* 3. Dark 3D Glass Card (For Calculator, Badges, Footer) */
 .glass-3d-dark {
-    background: linear-gradient(145deg, rgba(6, 36, 20, 0.94) 0%, rgba(10, 58, 32, 0.88) 50%, rgba(3, 20, 11, 0.98) 100%);
+    background: linear-gradient(145deg, rgba(6, 58, 39, 0.96) 0%, rgba(6, 58, 39, 0.92) 50%, rgba(4, 38, 25, 0.98) 100%);
     backdrop-filter: blur(20px) saturate(200%);
     -webkit-backdrop-filter: blur(20px) saturate(200%);
     border: 1px solid rgba(74, 222, 128, 0.28);
@@ -137,7 +153,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 .glass-pill-dark {
-    background: rgba(6, 36, 20, 0.6);
+    background: rgba(6, 58, 39, 0.7);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(74, 222, 128, 0.25);
@@ -199,7 +215,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 .badge-forest {
-    background: linear-gradient(135deg, rgba(6, 36, 20, 0.9) 0%, rgba(10, 58, 32, 0.8) 100%);
+    background: linear-gradient(135deg, rgba(6, 58, 39, 0.92) 0%, rgba(6, 58, 39, 0.85) 100%);
     border: 1px solid rgba(74, 222, 128, 0.35);
     color: #a7f3d0;
 }
@@ -216,7 +232,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 /* 3D Primary Button with Emerald-Forest Gradient */
 .btn-3d-emerald {
-    background: linear-gradient(135deg, #10b981 0%, #059669 40%, #064e3b 100%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 40%, #063A27 100%);
     color: #ffffff;
     box-shadow: 
         0 8px 20px -3px rgba(16, 185, 129, 0.45),
@@ -410,21 +426,6 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     }
 }
 
-/* SCNEXTGEN Signature Badge */
-.scnextgen-badge {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(16, 185, 129, 0.12) 100%);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(52, 211, 153, 0.25);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-}
-
-.scnextgen-badge:hover {
-    border-color: rgba(52, 211, 153, 0.6);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(16, 185, 129, 0.22) 100%);
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
-}
 
 /* Luxury Welcome Intro Splash Screen */
 #welcomeSplash {
@@ -808,24 +809,24 @@ h1, h2, h3, h4, h5, h6, .font-heading {
                 radial-gradient(circle at 10% 25%, rgba(220, 252, 231, 0.4) 0%, transparent 45%),
                 radial-gradient(circle at 90% 65%, rgba(236, 253, 245, 0.6) 0%, transparent 50%),
                 linear-gradient(180deg, #ffffff 0%, #f9fdfa 55%, #f0fdf4 100%) !important;
-    color: #0f172a !important;
+    color: #063A27 !important;
 }
 
 .hero-clean-white h1,
 .hero-clean-white .hero-title-light,
 .hero-dark-luxury h1,
 .hero-dark-luxury .hero-title-light {
-    color: #052e16 !important;
+    color: #063A27 !important;
 }
 
 .hero-clean-white p.hero-lead-text,
 .hero-dark-luxury p.hero-lead-text {
-    color: #14532d !important;
+    color: #063A27 !important;
 }
 
 .hero-clean-white p.hero-sub-text,
 .hero-dark-luxury p.hero-sub-text {
-    color: #334155 !important;
+    color: #063A27 !important;
     opacity: 0.95;
 }
 
@@ -860,7 +861,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 /* 1. Master Quote Card Container */
 .quote-luxury-card {
-    background: linear-gradient(150deg, #052212 0%, #08381e 45%, #041d0f 100%) !important;
+    background: linear-gradient(150deg, #063A27 0%, #063A27 50%, #04261a 100%) !important;
     border: 2px solid rgba(52, 211, 153, 0.45);
     border-radius: 2.5rem;
     box-shadow: 
@@ -898,7 +899,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 /* 3. High-Contrast Pure White Input Boxes */
 .quote-input-white {
     background-color: #ffffff !important;
-    color: #052e16 !important;
+    color: #063A27 !important;
     border: 2px solid #a7f3d0 !important;
     border-radius: 1rem;
     font-weight: 700;
@@ -968,7 +969,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 /* 6. Trust Value Prop Pills inside Quote Card */
 .quote-trust-pill {
-    background: rgba(6, 36, 20, 0.75);
+    background: rgba(6, 58, 39, 0.85);
     border: 1px solid rgba(52, 211, 153, 0.3);
     border-radius: 1rem;
     padding: 0.75rem 1rem;
@@ -980,7 +981,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 .quote-trust-pill:hover {
-    background: rgba(8, 48, 27, 0.9);
+    background: rgba(6, 58, 39, 0.95);
     border-color: rgba(52, 211, 153, 0.6);
     transform: translateY(-2px);
 }
@@ -1065,7 +1066,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #064e3b;
+    color: #063A27;
     border: 1px solid rgba(167, 243, 208, 0.75);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
     display: inline-flex;
@@ -1102,7 +1103,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     width: 1.85rem;
     height: 1.85rem;
     border-radius: 9999px;
-    background: rgba(6, 36, 20, 0.82);
+    background: rgba(6, 58, 39, 0.9);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(52, 211, 153, 0.45);
@@ -1128,7 +1129,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 .ind-card-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(6, 36, 20, 0.42) 0%, rgba(6, 36, 20, 0.05) 50%, transparent 100%);
+    background: linear-gradient(to top, rgba(6, 58, 39, 0.45) 0%, rgba(6, 58, 39, 0.08) 50%, transparent 100%);
     opacity: 0.65;
     transition: opacity 0.5s ease;
     pointer-events: none;
