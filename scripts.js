@@ -186,7 +186,7 @@
         const productSpecs = {
             'stretch-film': {
                 title: 'High-Grade Pallet Stretch Film (Hand & Machine)',
-                image: './assets/stretch-film-machine.jpg',
+                image: './assets/stretch-film-flagship.jpg',
                 subtitle: 'Linear Low Density Polyethylene (LLDPE) • Industrial Grade',
                 description: 'Our flagship stretch film is engineered for secure wrapping, load stability, and safe transport. It preserves goods against moisture, humidity, dust, and physical transit vibration.',
                 category: 'Stretch Film',
