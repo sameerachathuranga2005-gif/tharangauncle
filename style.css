@@ -275,19 +275,19 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 .glow-emerald {
-    background: radial-gradient(circle, rgba(16, 185, 129, 0.38) 0%, rgba(5, 150, 105, 0.15) 50%, transparent 75%);
+    background: radial-gradient(circle, rgba(52, 211, 153, 0.45) 0%, rgba(16, 185, 129, 0.2) 50%, transparent 75%);
 }
 
 .glow-mint {
-    background: radial-gradient(circle, rgba(52, 211, 153, 0.35) 0%, rgba(110, 231, 183, 0.12) 50%, transparent 75%);
+    background: radial-gradient(circle, rgba(110, 231, 183, 0.4) 0%, rgba(52, 211, 153, 0.18) 50%, transparent 75%);
 }
 
 .glow-lime {
-    background: radial-gradient(circle, rgba(132, 204, 22, 0.25) 0%, rgba(163, 230, 53, 0.1) 50%, transparent 75%);
+    background: radial-gradient(circle, rgba(163, 230, 53, 0.35) 0%, rgba(132, 204, 22, 0.15) 50%, transparent 75%);
 }
 
 .glow-forest {
-    background: radial-gradient(circle, rgba(6, 78, 59, 0.3) 0%, rgba(2, 44, 34, 0.1) 50%, transparent 75%);
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, rgba(5, 150, 105, 0.12) 50%, transparent 75%);
 }
 
 /* ==========================================================
@@ -801,40 +801,57 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     100% { transform: rotate(360deg); }
 }
 
-/* 7. Dark Luxury Hero Theme & Text Overrides */
+/* 7. Clean White Luxury Hero Theme & Text Overrides */
+.hero-clean-white,
 .hero-dark-luxury {
-    background: radial-gradient(ellipse 90% 60% at 50% -15%, rgba(16, 185, 129, 0.22) 0%, transparent 70%),
-                radial-gradient(circle at 10% 30%, rgba(5, 150, 105, 0.16) 0%, transparent 40%),
-                radial-gradient(circle at 90% 70%, rgba(34, 197, 94, 0.12) 0%, transparent 45%),
-                linear-gradient(180deg, #02140b 0%, #041f12 50%, #03170e 100%) !important;
-    color: #ecfdf5 !important;
+    background: radial-gradient(ellipse 90% 50% at 50% -10%, rgba(209, 250, 229, 0.45) 0%, transparent 65%),
+                radial-gradient(circle at 10% 25%, rgba(220, 252, 231, 0.4) 0%, transparent 45%),
+                radial-gradient(circle at 90% 65%, rgba(236, 253, 245, 0.6) 0%, transparent 50%),
+                linear-gradient(180deg, #ffffff 0%, #f9fdfa 55%, #f0fdf4 100%) !important;
+    color: #0f172a !important;
 }
 
+.hero-clean-white h1,
+.hero-clean-white .hero-title-light,
 .hero-dark-luxury h1,
-.hero-dark-luxury h2,
-.hero-dark-luxury h3,
 .hero-dark-luxury .hero-title-light {
+    color: #052e16 !important;
+}
+
+.hero-clean-white p.hero-lead-text,
+.hero-dark-luxury p.hero-lead-text {
+    color: #14532d !important;
+}
+
+.hero-clean-white p.hero-sub-text,
+.hero-dark-luxury p.hero-sub-text {
+    color: #334155 !important;
+    opacity: 0.95;
+}
+
+.hero-clean-white .hero-tagline-dark,
+.hero-dark-luxury .hero-tagline-dark {
+    background: #ecfdf5 !important;
+    border-color: rgba(52, 211, 153, 0.5) !important;
+    color: #065f46 !important;
+    box-shadow: 0 2px 10px rgba(16, 185, 129, 0.08) !important;
+}
+
+.hero-clean-white .hero-trust-tag,
+.hero-dark-luxury .hero-trust-tag {
+    color: #065f46 !important;
+}
+
+/* Ensure dark luxury cards inside hero maintain their crisp contrast */
+.card-3d-hologram h2 {
     color: #ffffff !important;
 }
-
-.hero-dark-luxury p.hero-lead-text {
-    color: #a7f3d0 !important;
+.card-3d-hologram p {
+    color: #ecfdf5 !important;
 }
-
-.hero-dark-luxury p.hero-sub-text {
-    color: #d1fae5 !important;
-    opacity: 0.88;
-}
-
-.hero-dark-luxury .hero-tagline-dark {
-    background: rgba(4, 30, 17, 0.85) !important;
-    border-color: rgba(52, 211, 153, 0.45) !important;
-    color: #6ee7b7 !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(110, 231, 183, 0.3) !important;
-}
-
-.hero-dark-luxury .hero-trust-tag {
-    color: #6ee7b7 !important;
+.tilt-card p,
+.tilt-card h4 {
+    color: inherit;
 }
 
 /* ==========================================================
@@ -967,3 +984,223 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     border-color: rgba(52, 211, 153, 0.6);
     transform: translateY(-2px);
 }
+
+/* ==========================================================
+   INDUSTRY CARDS - COMPACT IMAGE & LUXURY HOVER SYSTEM
+   ========================================================== */
+.ind-card-img-wrap {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    margin-bottom: 0.875rem;
+    background-color: rgba(6, 78, 59, 0.04);
+    box-shadow: 
+        0 4px 14px -3px rgba(6, 78, 59, 0.08),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Subtle frame elevation and emerald border glow on card hover */
+.glass-3d-card:hover .ind-card-img-wrap {
+    box-shadow: 
+        0 14px 28px -6px rgba(16, 185, 129, 0.22),
+        0 4px 12px -2px rgba(6, 78, 59, 0.08),
+        inset 0 0 0 1.5px rgba(52, 211, 153, 0.55);
+    transform: translateY(-2px);
+}
+
+/* Ultra-Smooth Photo Zoom & Color Pop */
+.ind-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1);
+    transition: transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
+}
+
+.glass-3d-card:hover .ind-card-img {
+    transform: scale(1.09);
+    filter: brightness(1.04) contrast(1.03) saturate(1.06);
+}
+
+/* Diagonal Glossy Shimmer Streak across the photo on hover */
+.ind-card-img-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -140%;
+    width: 65%;
+    height: 100%;
+    background: linear-gradient(
+        105deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 25%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0.08) 75%,
+        transparent 100%
+    );
+    transform: skewX(-20deg);
+    transition: left 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+    pointer-events: none;
+    z-index: 3;
+}
+
+.glass-3d-card:hover .ind-card-img-wrap::after {
+    left: 180%;
+}
+
+/* Dynamic Badge Styling & Micro-interaction */
+.ind-card-badge {
+    position: absolute;
+    top: 0.55rem;
+    left: 0.55rem;
+    padding: 0.22rem 0.6rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 0.58rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #064e3b;
+    border: 1px solid rgba(167, 243, 208, 0.75);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    z-index: 4;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-3d-card:hover .ind-card-badge {
+    background: #047857 !important;
+    color: #ffffff !important;
+    border-color: #10b981 !important;
+    box-shadow: 0 4px 14px rgba(4, 120, 87, 0.4);
+    transform: translateY(-1px) scale(1.02);
+}
+
+.ind-card-badge i {
+    color: #059669;
+    font-size: 0.65rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.glass-3d-card:hover .ind-card-badge i {
+    color: #a7f3d0 !important;
+    transform: scale(1.15);
+}
+
+/* Quick Floating Action Icon on Top-Right of Photo */
+.ind-card-action {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    width: 1.85rem;
+    height: 1.85rem;
+    border-radius: 9999px;
+    background: rgba(6, 36, 20, 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(52, 211, 153, 0.45);
+    color: #a7f3d0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    opacity: 0;
+    transform: scale(0.7) translate(4px, -4px);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 5;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+}
+
+.glass-3d-card:hover .ind-card-action {
+    opacity: 1;
+    transform: scale(1) translate(0, 0);
+}
+
+/* Soft Bottom Gradient Overlay */
+.ind-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(6, 36, 20, 0.42) 0%, rgba(6, 36, 20, 0.05) 50%, transparent 100%);
+    opacity: 0.65;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.glass-3d-card:hover .ind-card-overlay {
+    opacity: 0.2;
+}
+
+/* ==========================================================
+   PRODUCT CARDS - ENLARGED IMAGE & LUXURY HOVER SYSTEM
+   ========================================================== */
+.prod-card-img-wrap {
+    position: relative;
+    border-radius: 1.125rem;
+    overflow: hidden;
+    height: 13.5rem; /* 216px - exact same visual height as the industry cards */
+    margin-bottom: 1rem;
+    background-color: rgba(6, 78, 59, 0.04);
+    box-shadow: 
+        0 4px 14px -3px rgba(6, 78, 59, 0.08),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Frame elevation and emerald border glow on card hover */
+.glass-3d-card:hover .prod-card-img-wrap {
+    box-shadow: 
+        0 14px 28px -6px rgba(16, 185, 129, 0.22),
+        0 4px 12px -2px rgba(6, 78, 59, 0.08),
+        inset 0 0 0 1.5px rgba(52, 211, 153, 0.55);
+    transform: translateY(-2px);
+}
+
+.prod-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1);
+    transition: transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
+}
+
+.glass-3d-card:hover .prod-card-img {
+    transform: scale(1.09);
+    filter: brightness(1.04) contrast(1.03) saturate(1.06);
+}
+
+/* Diagonal Glossy Shimmer Streak on card hover */
+.prod-card-img-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -140%;
+    width: 65%;
+    height: 100%;
+    background: linear-gradient(
+        105deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 25%,
+        rgba(255, 255, 255, 0.45) 50%,
+        rgba(255, 255, 255, 0.08) 75%,
+        transparent 100%
+    );
+    transform: skewX(-20deg);
+    transition: left 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+    pointer-events: none;
+    z-index: 3;
+}
+
+.glass-3d-card:hover .prod-card-img-wrap::after {
+    left: 180%;
+}
+
