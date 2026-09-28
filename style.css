@@ -35,14 +35,13 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     color: #0A5C38;
 }
 
-/* Force dark green on any text that was previously black or dark neutral */
+/* Force dark green on any text that was previously dark neutral */
 .text-gray-950,
 .text-gray-900,
 .text-gray-800,
 .text-slate-950,
 .text-slate-900,
 .text-slate-800,
-.text-black,
 .text-zinc-950,
 .text-zinc-900,
 .text-zinc-800,
@@ -50,6 +49,12 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 .text-neutral-900,
 .text-neutral-800 {
     color: #0A5C38 !important;
+}
+
+/* Explicit true black text utility and industry card description */
+.text-black,
+.ind-card-desc {
+    color: #000000 !important;
 }
 
 /* Secondary dark text / body text / paragraph descriptions */
