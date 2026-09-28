@@ -323,7 +323,7 @@
             },
             'pp-strapping': {
                 title: 'Polypropylene (PP) Strapping Bands',
-                image: './assets/pp-strapping-circle.jpg',
+                image: './assets/cat-pp-strapping.jpg',
                 subtitle: 'Manual Hand Tools & Power Machine Strappers',
                 description: 'High tensile strength polypropylene bands designed for bundling and carton closure. Features diamond embossing to minimize tool tensioning slippage.',
                 category: 'Other Packaging',
@@ -335,6 +335,51 @@
                     ['Custom Printing', 'Company logo & trade name printed to order'],
                     ['Core Dimensions', '200mm standard machine core or cardboard reel'],
                     ['Availability', 'Available from GLE (In Stock)']
+                ]
+            },
+            'packaging-tape': {
+                title: 'OPP Carton Sealing & Packaging Tapes',
+                image: './assets/cat-packaging-tape.jpg',
+                subtitle: 'Heavy-Duty Brown & Crystal Clear Adhesive Tapes',
+                description: 'High-tack acrylic water-based & hot-melt adhesive packaging tapes engineered for firm carton box closure, export shipping, and warehouse sealing.',
+                category: 'Other Packaging',
+                specs: [
+                    ['Width Available', '48mm (2 Inch), 72mm (3 Inch)'],
+                    ['Length', '50m, 100m, 200m Industrial Rolls'],
+                    ['Film Type', 'Biaxially Oriented Polypropylene (BOPP)'],
+                    ['Color', 'Brown (Tan), Crystal Clear Transparent'],
+                    ['Adhesion Strength', 'High-shear peel adhesion, instant tack'],
+                    ['Availability', 'Available from GLE']
+                ]
+            },
+            'garbage-bags': {
+                title: 'Heavy-Duty Garbage Bags & Bin Liners',
+                image: './assets/cat-garbage-bags.jpg',
+                subtitle: 'Tear-Resistant Commercial & Industrial Waste Bags',
+                description: 'Heavy gauge polyethylene trash bags and roll liners designed for hotels, industrial plants, restaurants, and commercial facilities. Gusseted bottoms prevent leaks and punctures.',
+                category: 'Plastic Products',
+                specs: [
+                    ['Materials', 'Virgin & Recycled High-Grade LDPE / HDPE'],
+                    ['Sizes Available', 'Small (10L), Medium (30L), Large (60L), Jumbo (120L - 240L)'],
+                    ['Colors', 'Industrial Black, Clear, Yellow (Clinical)'],
+                    ['Format', 'Continuous Perforated Rolls & Flat Fold Packs'],
+                    ['Leak Resistance', 'Star-seal & heavy gusset bottom'],
+                    ['Availability', 'Available from GLE']
+                ]
+            },
+            'nitrile-gloves': {
+                title: 'Nitrile Gloves & Disposable Protection Supplies',
+                image: './assets/cat-nitrile-gloves.jpg',
+                subtitle: 'Powder-Free Examination Gloves & Hygiene Disposables',
+                description: 'Medical-grade, food-safe blue nitrile gloves providing chemical resistance, textured grip, and superior puncture barrier alongside disposable hygienic sheets and aprons.',
+                category: 'Catering Products',
+                specs: [
+                    ['Material', '100% Synthetic Nitrile (Latex-Free, Powder-Free)'],
+                    ['Sizes Available', 'Small (S), Medium (M), Large (L), Extra Large (XL)'],
+                    ['Texture', 'Micro-textured fingertips for secure wet/dry grip'],
+                    ['Standards', 'Food Contact Safe & Industrial Hygiene Standard'],
+                    ['Additional Items', 'Disposable Surgical Bed Sheets, Plastic Aprons'],
+                    ['Availability', 'Available from GLE']
                 ]
             },
             'strapping-clips': {
@@ -369,10 +414,10 @@
             },
             'silage-film': {
                 title: 'Agricultural Silage & Barrier Film',
-                image: './assets/eco-sustainability.jpg',
+                image: './assets/cat-silage-film.jpg',
                 subtitle: 'Heavy-Duty Agricultural Barrier Grade',
                 description: 'Multi-layer blown film designed for tropical agricultural environments. Creates a protective seal against moisture and outdoor weather conditions.',
-                category: 'Other Packaging',
+                category: 'Stretch Film',
                 specs: [
                     ['Weather Protection', 'Outdoor Moisture & Weather Resistance'],
                     ['Thickness', '25 Micron to 35 Micron'],
