@@ -134,8 +134,8 @@
                 strap = '9mm - 12mm PP Strap';
             } else if (app === 'agricultural') {
                 gauge = '25 - 35 Micron';
-                filmType = 'Agricultural Silage & Barrier Film (UV Protected)';
-                desc = 'Co-extruded multi-layer film with 12-month tropical UV inhibitors for outdoor agricultural storage.';
+                filmType = 'Agricultural Silage & Barrier Film';
+                desc = 'Co-extruded multi-layer barrier film designed for outdoor agricultural storage and weather protection.';
                 width = '500mm / 750mm';
                 yieldStr = '250%';
                 strap = '15mm Heavy PP Strap';
@@ -160,7 +160,7 @@
                     if (weight > 1000) {
                         gauge = '23 Micron';
                         filmType = 'Extra Heavy Manual Hand Wrap';
-                        desc = 'Maximum puncture resistance against sharp wooden pallets and heavy metal cartons.';
+                        desc = 'High puncture resistance against wooden pallets and heavy cartons.';
                         strap = '15mm PP Strap + PP Clips';
                     } else {
                         gauge = '17 - 20 Micron';
@@ -186,19 +186,19 @@
         const productSpecs = {
             'stretch-film': {
                 title: 'High-Grade Pallet Stretch Film (Hand & Machine)',
-                image: './assets/cat-stretch-film.jpg',
-                subtitle: 'Linear Low Density Polyethylene (LLDPE) • Virgin Grade',
+                image: './assets/stretch-film-machine.jpg',
+                subtitle: 'Linear Low Density Polyethylene (LLDPE) • Industrial Grade',
                 description: 'Our flagship stretch film is engineered for secure wrapping, load stability, and safe transport. It preserves goods against moisture, humidity, dust, and physical transit vibration.',
                 category: 'Stretch Film',
                 specs: [
-                    ['Polymer Base', '100% Virgin LLDPE'],
+                    ['Polymer Base', 'High-Grade Industrial LLDPE'],
                     ['Thickness Options', '15μm, 17μm, 20μm, 23μm, 25μm, 30μm'],
                     ['Standard Width', '500 mm (Custom 100mm to 750mm)'],
                     ['Stretch Elongation', 'Up to 300% Pre-stretch'],
                     ['Cling Characteristic', 'Smooth non-tacky outer, high cling inner'],
-                    ['Puncture Resistance', 'ASTM D1709 Compliant Testing'],
-                    ['Recyclability', '100% Recyclable Category 4 (LDPE)'],
-                    ['Availability', 'In Stock • Available from GLE (Direct Factory Supply)']
+                    ['Puncture Resistance', 'High Tear & Puncture Resistance'],
+                    ['Material Grade', 'Virgin / High-Clarity Industrial LLDPE'],
+                    ['Availability', 'In Stock • Available from GLE (Direct Wholesale Supply)']
                 ]
             },
             'mini-bundling': {
@@ -220,7 +220,7 @@
                 title: 'Aluminium Food Containers & Heavy-Duty Foil Rolls',
                 image: './assets/cat-aluminium.jpg',
                 subtitle: 'Food-Grade Aluminium Foil • Oven, Grill & Freezer Safe',
-                description: 'Certified food-grade aluminium packaging providing superior barrier against light, moisture, and odors. Perfect for takeaway restaurants, caterers, and bakeries requiring leak-proof and heat-retaining containers.',
+                description: 'Food-grade aluminium packaging providing superior barrier against light, moisture, and odors. Perfect for takeaway restaurants, caterers, and bakeries requiring leak-proof and heat-retaining containers.',
                 category: 'Aluminium Packaging',
                 specs: [
                     ['Product Types', 'Rectangular Food Containers, Round Foil Bowls, Foil Rolls'],
@@ -242,22 +242,22 @@
                     ['Food Packaging', 'Pizza Boxes, Zipper Bags, Food Vacuum Bags, Cling Film'],
                     ['Hygiene & Service', 'Food Service Gloves, Toothpicks, Chopsticks, Disposable Cutlery'],
                     ['Available Sizes', 'Multiple commercial sizes and wholesale pack options'],
-                    ['Compliance', 'Certified Food Contact Safe & Non-Toxic'],
+                    ['Compliance', 'Food Contact Safe & Non-Toxic'],
                     ['Availability', 'Available from GLE (Direct Wholesale Supply)']
                 ]
             },
             'ecofriendly-packaging': {
-                title: 'EcoWare Boxes & Sugarcane Bagasse Trays',
+                title: 'Meal Boxes & Sugarcane Bagasse Trays',
                 image: './assets/cat-ecofriendly.jpg',
-                subtitle: '100% Biodegradable & Compostable Plant-Fiber Packaging',
-                description: 'Sustainably sourced natural sugarcane bagasse tableware that decomposes naturally within 90 days. Heat-tolerant, oil-resistant, and free from plastic linings or PFAS.',
-                category: 'Eco-Friendly Packaging',
+                subtitle: 'Natural Plant-Fiber Food Packaging',
+                description: 'Natural sugarcane bagasse tableware designed for takeaway restaurants, cloud kitchens, and catering. Heat-tolerant, oil-resistant, and rigid without chemical wax linings.',
+                category: 'Bagasse Packaging',
                 specs: [
-                    ['Products Included', 'EcoWare Boxes, Multi-compartment Bagasse Trays, Eco Bowls, Cups & Lids'],
-                    ['Material Origin', '100% Upcycled Sugarcane Fiber (Bagasse)'],
+                    ['Products Included', 'Compartment Meal Trays, Food Boxes, Bowls, Cups & Lids'],
+                    ['Material Origin', 'Natural Sugarcane Fiber (Bagasse)'],
                     ['Thermal Rating', 'Microwave safe up to 120°C, Freezer safe to -20°C'],
                     ['Oil Resistance', 'Waterproof and grease-resistant without chemical wax'],
-                    ['Biodegradability', '100% Home and Industrial Compostable'],
+                    ['Construction', 'Rigid molded fiber with high dimensional strength'],
                     ['Availability', 'Available from GLE']
                 ]
             },
@@ -269,7 +269,7 @@
                 category: 'Paper Products',
                 specs: [
                     ['Products Included', 'Decorative Doilies, Cupcake Liners, Window Cake Boxes, Paper Cups'],
-                    ['Paper Quality', 'Virgin Food-Grade Bleached and Kraft Board'],
+                    ['Paper Quality', 'Food-Grade Bleached and Kraft Board'],
                     ['Cup Capacities', '4oz, 6oz, 8oz, 12oz, 16oz single & double wall with lids'],
                     ['Liners & Doilies', 'Greaseproof fluted liners & lace round/oval doilies'],
                     ['Application', 'Bakery display, cafe takeaway, patisseries, banquet service'],
@@ -295,7 +295,7 @@
                 title: 'Natural Wooden & Bamboo Catering Products',
                 image: './assets/cat-wooden.jpg',
                 subtitle: 'Smooth Polished Bamboo Skewers, Boat Trays & Cutlery',
-                description: 'Sustainably harvested bamboo skewers, cocktail knot skewers, paddle skewers, rustic wooden boat trays, and disposable wooden cutlery for dining and events.',
+                description: 'High-quality natural bamboo skewers, cocktail knot skewers, paddle skewers, rustic wooden boat trays, and disposable wooden cutlery for dining and events.',
                 category: 'Wooden Products',
                 specs: [
                     ['Products Included', 'BBQ Sticks, Knot Skewers, Looper Skewers, Paddle Skewers, Wooden Boats, Wooden Cups'],
@@ -314,7 +314,7 @@
                 category: 'Kraft Packaging',
                 specs: [
                     ['Products Included', 'Kraft Containers, SHA Boxes, Cake Cup Boxes, Lunch Boxes, Pouch Bags, Kraft Trays, Paper Bags'],
-                    ['Board Material', 'High-burst strength Virgin Brown Kraft Paperboard'],
+                    ['Board Material', 'High-burst strength Brown Kraft Paperboard'],
                     ['Lining', 'Food-grade moisture and oil-resistant inner lining'],
                     ['Formats', 'Fold-top lunch cartons, window bakery boxes, stand-up zip pouches'],
                     ['Handle Bags', 'Twisted paper handles with reinforced bottom base'],
@@ -341,10 +341,10 @@
                 title: 'Strapping Clips & Seals (PP Plastic & Steel)',
                 image: './assets/plastic-clips-square.jpg',
                 subtitle: 'Tool-Free PP Buckles & High-Shear Steel Crimp Seals',
-                description: 'Eco-friendly PP Plastic Clips can be applied manually without any tensioning tools and are recycled directly together with the strap. Heavy Steel Seals provide permanent crimp hold.',
+                description: 'PP Plastic Clips can be applied manually without any tensioning tools and provide a fast, secure joint with the strap. Heavy Steel Seals provide permanent crimp hold for high-tension strapping.',
                 category: 'Other Packaging',
                 specs: [
-                    ['Plastic Clip Material', '100% Polypropylene (Recycles with PP Strap)'],
+                    ['Plastic Clip Material', '100% High-Strength Polypropylene (PP)'],
                     ['Steel Seal Material', 'High-Grade Galvanized Steel'],
                     ['Sizes Available', '12mm, 15mm, 19mm Widths'],
                     ['Advantage of Plastic', 'Zero sharp edges, non-scratch, zero rust'],
@@ -364,17 +364,17 @@
                     ['Micron Gauges', '20μm, 23μm, 29μm, 35μm'],
                     ['Core Size', '3 Inch (76mm) Heavy Paper Core'],
                     ['Pallet Unitization', 'Extreme holding for container export'],
-                    ['Availability', 'Available from GLE (Direct Factory Supply)']
+                    ['Availability', 'Available from GLE (Direct Wholesale Supply)']
                 ]
             },
             'silage-film': {
                 title: 'Agricultural Silage & Barrier Film',
                 image: './assets/eco-sustainability.jpg',
-                subtitle: '12-Month UV Stabilized Agricultural Grade',
-                description: 'Multi-layer blown film technology with specialized UV stabilizers designed for tropical climates. Creates a hermetic seal against oxygen and moisture.',
+                subtitle: 'Heavy-Duty Agricultural Barrier Grade',
+                description: 'Multi-layer blown film designed for tropical agricultural environments. Creates a protective seal against moisture and outdoor weather conditions.',
                 category: 'Other Packaging',
                 specs: [
-                    ['UV Resistance', 'Minimum 12 Months Tropical Sunlight Rating'],
+                    ['Weather Protection', 'Outdoor Moisture & Weather Resistance'],
                     ['Thickness', '25 Micron to 35 Micron'],
                     ['Available Colors', 'White (Heat Reflective), Green, Black'],
                     ['Applications', 'Forage, silage bales, outdoor construction covers'],
@@ -809,16 +809,72 @@ ${notes}
         window.replayWelcomeSplash = replayWelcomeSplash;
         window.dismissWelcomeSplash = dismissWelcomeSplash;
 
+        // 11. Hero Feature Video Management (Auto-play, Audio Toggle & State)
+        function initHeroVideo() {
+            const video = document.getElementById('hero-pallet-video');
+            const soundBtn = document.getElementById('hero-video-sound-btn');
+            const soundIcon = document.getElementById('hero-sound-icon');
+
+            if (!video) return;
+
+            // Ensure video autoplays smoothly
+            video.muted = true;
+            const tryPlay = () => {
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        // User interaction fallback
+                        const playOnInteraction = () => {
+                            video.play().catch(() => {});
+                            window.removeEventListener('click', playOnInteraction);
+                            window.removeEventListener('scroll', playOnInteraction);
+                            window.removeEventListener('touchstart', playOnInteraction);
+                        };
+                        window.addEventListener('click', playOnInteraction, { once: true });
+                        window.addEventListener('scroll', playOnInteraction, { once: true });
+                        window.addEventListener('touchstart', playOnInteraction, { once: true });
+                    });
+                }
+            };
+            tryPlay();
+
+            // Sound Toggle Handler
+            if (soundBtn) {
+                soundBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (video.muted) {
+                        video.muted = false;
+                        if (soundIcon) {
+                            soundIcon.classList.remove('fa-volume-xmark');
+                            soundIcon.classList.add('fa-volume-high');
+                        }
+                        soundBtn.classList.add('!bg-emerald-500', '!text-white', 'shadow-emerald-500/40');
+                        soundBtn.setAttribute('title', 'Audio Unmuted - Click to Mute');
+                    } else {
+                        video.muted = true;
+                        if (soundIcon) {
+                            soundIcon.classList.remove('fa-volume-high');
+                            soundIcon.classList.add('fa-volume-xmark');
+                        }
+                        soundBtn.classList.remove('!bg-emerald-500', '!text-white', 'shadow-emerald-500/40');
+                        soundBtn.setAttribute('title', 'Click to Unmute Audio');
+                    }
+                });
+            }
+        }
+
         // Initialize on DOM ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
                 initWelcomeSplash();
                 init3DTilt();
                 initScrollReveal();
+                initHeroVideo();
             });
         } else {
             initWelcomeSplash();
             init3DTilt();
             initScrollReveal();
+            initHeroVideo();
         }
 
