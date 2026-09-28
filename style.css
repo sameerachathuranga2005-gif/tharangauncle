@@ -706,21 +706,21 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     position: relative;
     border-radius: 2.2rem;
     box-shadow: 
-        0 20px 40px -10px rgba(0, 0, 0, 0.7),
-        0 0 30px rgba(16, 185, 129, 0.3),
-        inset 0 1px 2px rgba(255, 255, 255, 0.4);
-    border: 2px solid rgba(74, 222, 128, 0.4);
+        0 20px 45px -10px rgba(0, 0, 0, 0.6),
+        0 0 35px rgba(74, 222, 128, 0.45),
+        inset 0 1.5px 3px rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(134, 239, 172, 0.9);
     transform-style: preserve-3d;
     will-change: transform, box-shadow;
     cursor: pointer;
 }
 
 .tilt-card:hover {
-    border-color: rgba(110, 231, 183, 0.95);
+    border-color: rgba(220, 252, 231, 1);
     box-shadow: 
-        0 28px 60px -10px rgba(0, 0, 0, 0.85),
-        0 0 50px rgba(34, 197, 94, 0.55),
-        inset 0 2px 4px rgba(255, 255, 255, 0.7);
+        0 28px 60px -10px rgba(0, 0, 0, 0.75),
+        0 0 55px rgba(74, 222, 128, 0.7),
+        inset 0 2px 4px rgba(255, 255, 255, 0.95);
 }
 
 /* 3. Specular Glare / Flash Overlay following cursor */
@@ -822,7 +822,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 .hero-clean-white p.hero-lead-text,
 .hero-dark-luxury p.hero-lead-text {
-    color: #16a34a !important;
+    color: #000000 !important;
 }
 
 .hero-clean-white p.hero-sub-text,
