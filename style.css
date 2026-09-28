@@ -177,8 +177,9 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     -webkit-text-fill-color: transparent;
 }
 
+.gradient-text-natural,
 .gradient-text-mint {
-    background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -821,7 +822,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 .hero-clean-white p.hero-lead-text,
 .hero-dark-luxury p.hero-lead-text {
-    color: #0A5C38 !important;
+    color: #16a34a !important;
 }
 
 .hero-clean-white p.hero-sub-text,
