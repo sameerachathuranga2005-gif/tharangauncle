@@ -25,14 +25,14 @@
                             500: '#10b981',
                             600: '#059669',
                             700: '#047857',
-                            800: '#065f46',
-                            900: '#064e3b',
-                            950: '#022c22',
+                            800: '#063A27',
+                            900: '#063A27',
+                            950: '#04261a',
                         },
                         forest: {
-                            800: '#0b3d22',
-                            900: '#062414',
-                            950: '#03140a',
+                            800: '#0A5C38',
+                            900: '#0A5C38',
+                            950: '#0A5C38',
                         },
                         gray: {
                             50: '#f9fafb',
@@ -40,11 +40,12 @@
                             200: '#e5e7eb',
                             300: '#d1d5db',
                             400: '#9ca3af',
-                            500: '#6b7280',
-                            600: '#4b5563',
-                            700: '#052e16',
-                            800: '#07381b',
-                            900: '#052e16',
+                            500: '#0D6E42',
+                            600: '#0D6E42',
+                            700: '#0D6E42',
+                            800: '#0A5C38',
+                            900: '#0A5C38',
+                            950: '#0A5C38',
                         },
                         slate: {
                             50: '#f8fafc',
@@ -52,11 +53,12 @@
                             200: '#e2e8f0',
                             300: '#cbd5e1',
                             400: '#94a3b8',
-                            500: '#64748b',
-                            600: '#475569',
-                            700: '#052e16',
-                            800: '#07381b',
-                            900: '#052e16',
+                            500: '#0D6E42',
+                            600: '#0D6E42',
+                            700: '#0D6E42',
+                            800: '#0A5C38',
+                            900: '#0A5C38',
+                            950: '#0A5C38',
                         }
                     },
                     fontFamily: {
@@ -82,7 +84,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="bg-[#f7faf8] text-[#052e16] antialiased selection:bg-gle-500 selection:text-white">
+<body class="bg-[#f7faf8] text-[#0A5C38] antialiased selection:bg-gle-500 selection:text-white">
 
     <!-- Top Announcement Bar -->
     <div class="bg-gradient-to-r from-forest-900 via-gle-900 to-forest-800 text-white text-[11px] sm:text-xs py-2 px-4 border-b border-emerald-900/40">
@@ -213,7 +215,7 @@
                     Industrial Packaging & Wholesale Solutions
                 </h1>
                 <p class="mt-4 text-base sm:text-lg text-emerald-100/90 max-w-2xl mx-auto font-normal leading-relaxed">
-                    Filter across 10 specialized categories: Pallet Stretch Film, Aluminium Containers, Catering Supplies, Bagasse Trays & Boxes, Bakery Paper, Plastic Ware, Wooden Skewers, Kraft Boxes, and PP Strapping Bands.
+                    Filter across 14 specialized lines: Pallet Stretch Film, Silage Film, OPP Packaging Tapes, Nitrile Gloves, Garbage Bags, Aluminium Containers, Catering Supplies, Bagasse Trays, Paper Packaging, Plastic Ware, Wooden Skewers, Kraft Boxes, and PP Strapping Bands.
                 </p>
 
                 <!-- Quick Breadcrumb / Links -->
@@ -253,7 +255,7 @@
                     <div class="flex flex-wrap justify-center gap-2 sm:gap-2.5 max-w-5xl mx-auto">
                         <button onclick="filterProducts('all')" data-cat="all"
                             class="product-tab-btn active px-4 py-2 rounded-full text-xs font-bold transition-all bg-gle-600 text-white shadow-md">
-                            All Solutions (10)
+                            All Solutions (14)
                         </button>
                         <button onclick="filterProducts('stretch')" data-cat="stretch"
                             class="product-tab-btn px-4 py-2 rounded-full text-xs font-bold transition-all bg-gray-100 text-gray-700 hover:bg-gle-50 hover:text-gle-700">
@@ -301,7 +303,7 @@
                     <div class="product-card" data-category="stretch">
                         <div class="glass-card rounded-3xl overflow-hidden h-full flex flex-col group border border-gray-100 hover:border-gle-300 transition-all shadow-sm hover:shadow-xl">
                             <div class="relative h-60 bg-gray-50 overflow-hidden flex items-center justify-center p-3">
-                                <img src="./assets/stretch-film-machine.jpg" alt="High-Performance Stretch Film GLE"
+                                <img src="./assets/stretch-film-flagship.jpg" alt="High-Performance Stretch Film GLE"
                                     class="h-full w-full object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-500">
                                 <span class="absolute top-4 right-4 bg-gle-600 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
                                     Flagship Item
@@ -645,7 +647,7 @@
 
                                 <div class="pt-5 mt-5 border-t border-gray-100">
                                     <button onclick="requestProductQuote('Kraft Packaging', 'Kraft Containers, Lunch Boxes & Pouches')"
-                                        class="w-full py-3 px-4 rounded-xl bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2">
+                                        class="w-full py-3 px-4 rounded-xl bg-gle-600 hover:bg-gle-700 text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2">
                                         <i class="fa-solid fa-file-invoice"></i>
                                         <span>Request a Quotation</span>
                                     </button>
@@ -654,37 +656,193 @@
                         </div>
                     </div>
 
-                    <!-- ITEM 10: PP Strapping & Industrial Protection (Other Packaging) -->
+                    <!-- ITEM 10: Polypropylene (PP) Strapping Bands (Other Packaging) -->
                     <div class="product-card" data-category="other">
                         <div class="glass-card rounded-3xl overflow-hidden h-full flex flex-col group border border-teal-100 hover:border-teal-300 transition-all shadow-sm hover:shadow-xl">
                             <div class="relative h-60 bg-gray-50 overflow-hidden flex items-center justify-center p-3">
-                                <img src="./assets/pp-strapping-circle.jpg" alt="PP Strapping Bands and Clips GLE"
-                                    class="h-full w-full object-contain transform group-hover:scale-105 transition-transform duration-500">
+                                <img src="./assets/cat-pp-strapping.jpg" alt="PP Strapping Bands and Coils GLE"
+                                    class="h-full w-full object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-500">
                                 <span class="absolute top-4 right-4 bg-teal-800 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
-                                    Industrial Fastening
+                                    High Tensile
                                 </span>
                             </div>
 
                             <div class="p-6 sm:p-7 flex-1 flex flex-col justify-between">
                                 <div>
                                     <div class="flex items-center justify-between text-xs text-teal-800 font-bold mb-2">
-                                        <span>Other Packaging Solutions</span>
-                                        <span>High Tensile</span>
+                                        <span>Strapping Solutions</span>
+                                        <span>Anti-Slip Embossed</span>
                                     </div>
                                     <h3 class="text-xl font-bold text-gray-900 group-hover:text-teal-800 transition-colors">
-                                        PP Strapping Bands, Clips & Silage Film
+                                        Polypropylene (PP) Strapping Bands
                                     </h3>
 
                                     <div class="mt-4 pt-3 border-t border-gray-100 flex flex-wrap gap-1.5">
-                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">PP Strapping</span>
-                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Plastic & Steel Clips</span>
-                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Silage Film</span>
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Manual &amp; Machine Rolls</span>
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Black, Blue, Green</span>
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">High Tensile Hold</span>
                                     </div>
                                 </div>
 
                                 <div class="pt-5 mt-5 border-t border-gray-100">
-                                    <button onclick="requestProductQuote('PP Strapping & Clips', 'PP Strapping Bands, Clips & Silage Film')"
-                                        class="w-full py-3 px-4 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2">
+                                    <button onclick="requestProductQuote('Strapping Solutions', 'Polypropylene (PP) Strapping Bands')"
+                                        class="w-full py-3 px-4 rounded-xl bg-gle-600 hover:bg-gle-700 text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span>Request a Quotation</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ITEM 11: Agricultural Silage Barrier Film Rolls (Stretch / Agriculture) -->
+                    <div class="product-card" data-category="stretch">
+                        <div class="glass-card rounded-3xl overflow-hidden h-full flex flex-col group border border-emerald-100 hover:border-emerald-300 transition-all shadow-sm hover:shadow-xl">
+                            <div class="relative h-60 bg-gray-50 overflow-hidden flex items-center justify-center p-3">
+                                <img src="./assets/cat-silage-film.jpg" alt="Agricultural Silage Film Rolls GLE"
+                                    class="h-full w-full object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-500">
+                                <span class="absolute top-4 right-4 bg-emerald-800 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
+                                    UV Barrier Grade
+                                </span>
+                            </div>
+
+                            <div class="p-6 sm:p-7 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between text-xs text-emerald-800 font-bold mb-2">
+                                        <span>Agricultural Packaging</span>
+                                        <span>Multi-Layer Barrier</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-emerald-800 transition-colors">
+                                        Agricultural Silage Barrier Film Rolls
+                                    </h3>
+
+                                    <div class="mt-4 pt-3 border-t border-gray-100 flex flex-wrap gap-1.5">
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Black &amp; White Film</span>
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Silage &amp; Forage Bales</span>
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Weather Resistant</span>
+                                    </div>
+                                </div>
+
+                                <div class="pt-5 mt-5 border-t border-gray-100">
+                                    <button onclick="requestProductQuote('Agricultural Packaging', 'Agricultural Silage Barrier Film Rolls')"
+                                        class="w-full py-3 px-4 rounded-xl bg-gle-600 hover:bg-gle-700 text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span>Request a Quotation</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ITEM 12: OPP Carton Sealing & Packaging Tapes (Other Packaging) -->
+                    <div class="product-card" data-category="other">
+                        <div class="glass-card rounded-3xl overflow-hidden h-full flex flex-col group border border-amber-100 hover:border-amber-300 transition-all shadow-sm hover:shadow-xl">
+                            <div class="relative h-60 bg-gray-50 overflow-hidden flex items-center justify-center p-3">
+                                <img src="./assets/cat-packaging-tape.jpg" alt="OPP Carton Sealing Packaging Tape GLE"
+                                    class="h-full w-full object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-500">
+                                <span class="absolute top-4 right-4 bg-amber-700 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
+                                    Industrial Adhesion
+                                </span>
+                            </div>
+
+                            <div class="p-6 sm:p-7 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between text-xs text-amber-800 font-bold mb-2">
+                                        <span>Adhesive Tapes</span>
+                                        <span>Carton Sealing</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-amber-800 transition-colors">
+                                        OPP Carton Sealing &amp; Packaging Tapes
+                                    </h3>
+
+                                    <div class="mt-4 pt-3 border-t border-gray-100 flex flex-wrap gap-1.5">
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Brown &amp; Transparent</span>
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">High Tack Adhesive</span>
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">48mm &amp; 72mm Widths</span>
+                                    </div>
+                                </div>
+
+                                <div class="pt-5 mt-5 border-t border-gray-100">
+                                    <button onclick="requestProductQuote('Adhesive Tapes', 'OPP Carton Sealing & Packaging Tapes')"
+                                        class="w-full py-3 px-4 rounded-xl bg-gle-600 hover:bg-gle-700 text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span>Request a Quotation</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ITEM 13: Heavy-Duty Garbage Bags & Bin Liners (Plastic Products) -->
+                    <div class="product-card" data-category="plastic">
+                        <div class="glass-card rounded-3xl overflow-hidden h-full flex flex-col group border border-gray-100 hover:border-gle-300 transition-all shadow-sm hover:shadow-xl">
+                            <div class="relative h-60 bg-gray-50 overflow-hidden flex items-center justify-center p-3">
+                                <img src="./assets/cat-garbage-bags.jpg" alt="Heavy Duty Garbage Bags and Bin Liners GLE"
+                                    class="h-full w-full object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-500">
+                                <span class="absolute top-4 right-4 bg-slate-900 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
+                                    Leak &amp; Tear Proof
+                                </span>
+                            </div>
+
+                            <div class="p-6 sm:p-7 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between text-xs text-gle-700 font-bold mb-2">
+                                        <span>Waste Management</span>
+                                        <span>Heavy-Gauge LDPE</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-gle-700 transition-colors">
+                                        Heavy-Duty Garbage Bags &amp; Bin Liners
+                                    </h3>
+
+                                    <div class="mt-4 pt-3 border-t border-gray-100 flex flex-wrap gap-1.5">
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Perforated Rolls</span>
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Heavy Flat Packs</span>
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Commercial Trash Liners</span>
+                                    </div>
+                                </div>
+
+                                <div class="pt-5 mt-5 border-t border-gray-100">
+                                    <button onclick="requestProductQuote('Waste Management', 'Heavy-Duty Garbage Bags & Bin Liners')"
+                                        class="w-full py-3 px-4 rounded-xl bg-gle-600 hover:bg-gle-700 text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-file-invoice"></i>
+                                        <span>Request a Quotation</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ITEM 14: Nitrile Examination Gloves & Disposables (Catering & Food) -->
+                    <div class="product-card" data-category="catering">
+                        <div class="glass-card rounded-3xl overflow-hidden h-full flex flex-col group border border-sky-100 hover:border-sky-300 transition-all shadow-sm hover:shadow-xl">
+                            <div class="relative h-60 bg-gray-50 overflow-hidden flex items-center justify-center p-3">
+                                <img src="./assets/cat-nitrile-gloves.jpg" alt="Blue Nitrile Examination Gloves GLE"
+                                    class="h-full w-full object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-500">
+                                <span class="absolute top-4 right-4 bg-sky-700 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-md">
+                                    Food &amp; Medical Grade
+                                </span>
+                            </div>
+
+                            <div class="p-6 sm:p-7 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center justify-between text-xs text-sky-800 font-bold mb-2">
+                                        <span>Hygiene &amp; Safety</span>
+                                        <span>Powder-Free</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-sky-800 transition-colors">
+                                        Nitrile Gloves &amp; Disposable Protection
+                                    </h3>
+
+                                    <div class="mt-4 pt-3 border-t border-gray-100 flex flex-wrap gap-1.5">
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Blue Nitrile Gloves</span>
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Disposable Sheets</span>
+                                        <span class="text-[10px] font-semibold bg-gray-100 text-gray-700 px-2 py-0.5 rounded">Latex-Free Grip</span>
+                                    </div>
+                                </div>
+
+                                <div class="pt-5 mt-5 border-t border-gray-100">
+                                    <button onclick="requestProductQuote('Hygiene & Safety', 'Nitrile Gloves & Disposable Protection')"
+                                        class="w-full py-3 px-4 rounded-xl bg-gle-600 hover:bg-gle-700 text-white text-xs font-bold transition-all shadow-sm flex items-center justify-center gap-2">
                                         <i class="fa-solid fa-file-invoice"></i>
                                         <span>Request a Quotation</span>
                                     </button>
@@ -804,6 +962,11 @@
                                             class="w-full bg-white/90 border border-gray-200 rounded-xl px-4 py-3 text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 shadow-sm transition-all">
                                             <option value="Stretch Film & Pallet Wrap (Flagship)">Stretch Film & Pallet Wrap (Flagship)</option>
                                             <option value="Mini Bundling Stretch Rolls (Baby Rolls)">Mini Bundling Stretch Rolls (Baby Rolls)</option>
+                                            <option value="Agricultural Silage Barrier Film Rolls">Agricultural Silage Barrier Film Rolls</option>
+                                            <option value="Polypropylene (PP) Strapping Bands">Polypropylene (PP) Strapping Bands</option>
+                                            <option value="OPP Carton Sealing & Packaging Tapes">OPP Carton Sealing & Packaging Tapes</option>
+                                            <option value="Heavy-Duty Garbage Bags & Bin Liners">Heavy-Duty Garbage Bags & Bin Liners</option>
+                                            <option value="Nitrile Gloves & Disposable Protection">Nitrile Gloves & Disposable Protection</option>
                                             <option value="Aluminium Containers & Foil Rolls">Aluminium Containers & Foil Rolls</option>
                                             <option value="Commercial Catering & Food Packaging">Commercial Catering & Food Packaging</option>
                                             <option value="Meal Boxes & Bagasse Trays (Plant-Fiber)">Meal Boxes & Bagasse Trays (Plant-Fiber)</option>
@@ -811,7 +974,6 @@
                                             <option value="Plastic Cups, Sauce Tubs & HIPS Trays">Plastic Cups, Sauce Tubs & HIPS Trays</option>
                                             <option value="Wooden Skewers, Boat Trays & Catering Ware">Wooden Skewers, Boat Trays & Catering Ware</option>
                                             <option value="Kraft Containers, Lunch Boxes & Pouches">Kraft Containers, Lunch Boxes & Pouches</option>
-                                            <option value="PP Strapping Bands, Clips & Silage Film">PP Strapping Bands, Clips & Silage Film</option>
                                             <option value="Other Packaging Solutions (Mixed Order)">Other Packaging Solutions (Mixed Order)</option>
                                         </select>
                                     </div>
@@ -939,17 +1101,10 @@
 
             </div>
 
-            <!-- Bottom Copyright & SCNEXTGEN Credits -->
+            <!-- Bottom Copyright -->
             <div class="pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 gap-4 border-t border-white/10">
                 <p>&copy; 2026 Green Light Enterprises (GLE). All rights reserved.</p>
 
-                <!-- SCNEXTGEN Craft Badge -->
-                <div class="scnextgen-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs text-gray-300">
-                    <span class="text-gray-400 text-[11px] font-medium">Crafted with</span>
-                    <i class="fa-solid fa-bolt text-emerald-400 text-[10px] animate-pulse"></i>
-                    <span class="text-gray-400 text-[11px] font-medium">by</span>
-                    <span class="font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-green-300">SCNEXTGEN</span>
-                </div>
 
                 <div class="flex items-center space-x-5">
                     <a href="#navbar" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5 font-medium">
